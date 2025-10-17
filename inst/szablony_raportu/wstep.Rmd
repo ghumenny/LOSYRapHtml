@@ -1,0 +1,278 @@
+---
+output:
+  word_document2:
+    teoc: yes
+    toc_depth: 2
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+<br> <br> <br>
+
+```{r 'Polska.wstep.setup',  echo=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE, results='asis', 
+                      fig.width = 10, fig.height = 10, fig.path = "figPOL/", 
+                      out.width = "100%")
+
+ewaluowana_edycja <- {{edycja}}
+ewaluowany_rok_abs <- {{rok_abs}}
+ewaluowany_rok <- {{rok}}
+if ({{edycja}} == {{rok_abs}} + 2) {
+  ewaluowany_kolejny_rok = {{rok_abs}} + 1
+} 
+
+set_flextable_defaults(
+#  font.family = "Cambria",
+  font.size = 10,
+  padding = 2,
+  border.color = "#CCCCCC",
+  line_spacing = 1.08,
+  digits = 2,
+  decimal.mark = ",",
+  big.mark = " ",
+  na_str = "<na>"
+)
+```
+
+# Wprowadzenie 
+
+## Cel i podstawy prawne monitoringu
+
+Monitoring karier absolwentów publicznych i niepublicznych szkół ponadpodstawowych i ponadgimnazjalnych[^1], zwany dalej „monitoringiem", to zadanie powierzone ministrowi właściwemu do spraw oświaty i wychowania na podstawie ustawy z dnia 25 lutego 2021 r. o zmianie ustawy -- Prawo oświatowe oraz niektórych innych ustaw [(Dz.U. 2021 poz. 619)](http://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20210000619/O/D20210619.pdf). Monitoring jest prowadzony w celu zapewnienia informacji na temat przebiegu karier absolwentów na potrzeby prowadzenia polityki oświatowej państwa na poziomie krajowym, regionalnym i lokalnym. Monitoring stanowi narzędzie komplementarne wobec, ogłaszanej corocznie przez MEN, prognozy zapotrzebowania na pracowników w zawodach szkolnictwa branżowego na krajowym i wojewódzkim rynku pracy, którą wprowadzono w 2019 r. Wiedza na temat przebiegu karier absolwentów oraz informacje na temat spodziewanego zapotrzebowania na zawody stanowią istotne wsparcie w dostosowywaniu kierunków i treści kształcenia do wymogów rynku pracy oraz w przygotowywaniu uczniów do wyboru zawodu i kierunku kształcenia. Na potrzebę prowadzenia monitoringu wskazują m.in.: Długookresowa Strategia Rozwoju Kraju 2030, Strategia na rzecz Odpowiedzialnego Rozwoju, Krajowy Program Reform, Strategia Rozwoju Kapitału Ludzkiego, Perspektywa uczenia się przez całe życie i Zintegrowana Strategia Umiejętności 2030.
+
+Dokumenty te podkreślają potrzebę lepszego zharmonizowania kształcenia zawodowego z rynkiem pracy, stworzenia dostępu do informacji o kwalifikacjach i zwiększenia efektywności wydatkowania publicznych i prywatnych środków na kształcenie i szkolenie. Na potrzebę działań w tym zakresie wskazuje także Umowa Partnerstwa z dnia 21 maja 2014 r. oraz przyjęte przez państwa członkowskie Unii Europejskiej w ramach Rady Unii Europejskiej, Zalecenia Rady z dnia 20 listopada 2017 r. dotyczące monitoringu karier absolwentów (Dz. Urz. UE z dnia 9.12.2017 C 423/1)[^2]. Wartość takich informacji podkreślono też w normach i wytycznych dla zapewniania jakości w europejskich ramach odniesienia na rzecz zapewniania jakości w kształceniu i szkoleniu zawodowym (EQAVET). Rozwiązania prawne niezbędne do stworzenia systemu monitoringu karier absolwentów szkół ponadpodstawowych i ponadgimnazjalnych powstały we współpracy ekspertów Instytutu Badań Edukacyjnych (IBE) oraz Ministerstwa Edukacji Narodowej (MEN), przede wszystkim Departamentu Strategii, Kwalifikacji i Kształcenia Zawodowego (obecnie Departament Kształcenia Zawodowego). 
+
+Głównym wyzwaniem przy tworzeniu systemu było określenie sposobów przekazywania i łączenia danych. Jednocześnie kluczowe były kwestie bezpieczeństwa i ochrony danych osobowych. W trakcie prac nad stworzeniem systemu wykorzystano doświadczenia z tworzenia ogólnopolskiego systemu monitorowania Ekonomicznych Losów Absolwentów szkół wyższych (ELA), który został zaprojektowany i wykonany przez Ośrodek Przetwarzania Informacji - Państwowy Instytut Badawczy i który funkcjonuje od 2015 r. Za realizację zadania monitoringu karier absolwentów odpowiedzialne są IBE oraz Centrum Informatyczne Edukacji (CIE), które pełni kluczową rolę w procesie przygotowania danych do analiz. 
+
+## Wykorzystane dane 
+
+Raport przygotowywano na podstawie danych pozyskanych w 2024 r. przez CIE z publicznych rejestrów. Dane te były przetwarzane, łączone i anonimizowane przez CIE. Za analizę danych i opracowanie ich wyników, w tym za sporządzane automatycznie raporty przekazywane szkołom, automatyczne raporty regionalne oraz automatyczne raporty wojewódzko-branżowe odpowiadało IBE. 
+Monitoring opiera się na danych dotyczących nauki w systemie oświaty (dane pochodzące z Systemu Informacji Oświatowej - SIO), uzyskiwania dyplomów i świadectw/certyfikatów (dane Okręgowych Komisji Egzaminacyjnych -- OKE oraz dane SIO), kontynuacji nauki na studiach (dane pochodzące z systemu POL-on) oraz aktywności na rynku pracy (dane Zakładu Ubezpieczeń Społecznych - ZUS). Ponieważ informacje konieczne do opisania w zadowalający sposób karier edukacyjnych i zawodowych absolwentów pochodzą z różnych źródeł, do połączenia tych informacji konieczne jest wykorzystanie identyfikatora pozwalającego jednoznacznie zidentyfikować tę samą osobę (absolwenta) w każdym ze źródeł danych. Rolę takiego identyfikatora spełnia numer PESEL[^3], który po połączeniu danych zostaje bezpowrotnie usunięty ze zbioru danych. W poniższej tabeli krótko omówiono zakres informacji pozyskanych z poszczególnych rejestrów.
+
+[^1]: Zgodnie z art. 6 ust.
+    1 ustawy z dnia 25 lutego 2021 r. o zmianie ustawy - Prawo oświatowe oraz niektórych innych ustaw (Dz. U. poz. 619) w latach 2021 - 2029 monitoring obejmuje również absolwentów publicznych i niepublicznych szkół ponadgimnazjalnych.
+
+[^2]: Dokument zaleca m.in. państwom członkowskim, by we współpracy z partnerami społecznymi promowały wydajność i zatrudnialność poprzez udostępnianie możliwości zdobywania adekwatnej wiedzy, umiejętności i kompetencji.
+    Dla osiągnięcia tego celu niezbędne jest zbieranie wysokiej jakości informacji na temat losów absolwentów.
+    Informacje te pozwolą na zrozumienie przyczyn problemów z zatrudnialnością absolwentów w poszczególnych regionach, sektorach gospodarki, poszczególnych dziedzinach szkolnictwa wyższego lub kształcenia i szkolenia zawodowego, a także pozwolą na znalezienie rozwiązań tych problemów.
+
+[^3]: W przypadku jego braku -- seria i numer paszportu lub innego dokumentu potwierdzającego tożsamość oraz -- jeżeli uczeń nie jest obywatelem polskim -- kraj pochodzenia.
+    Dane te są również usuwane po połączeniu danych, w procesie anonimizacji.
+
+```{r 'Polska.t1wp', echo=FALSE, results='asis'}
+cat0("Tabela ", tab_num(), ": Źródła i zakres danych wykorzystanych w raporcie\n")
+tabelka1 <- tibble(
+  `Źródło danych`= c("Dane Systemu Informacji Oświatowej", "Dane systemu egzaminów zewnętrznych OKE, Dane Systemu Informacji Oświatowej", "Dane systemu POL-on", "Dane ZUS"),
+ `Podmiot udostępniający dane` = c("Centrum Informatyczne Edukacji", "Centralna Komisja Egzaminacyjna oraz Okręgowe Komisje Egzaminacyjne, Centrum Informatyczne Edukacji", "Ośrodek Przetwarzania Informacji - Państwowy Instytut Badawczy (OPI)", "Zakład Ubezpieczeń Społecznych"),
+ `Zakres pozyskanych danych` = c("Podstawowe informacje na temat absolwentów: płeć, wiek i rok ukończenia nauki, status młodocianego pracownika. Informacja o zawodzie i branży, w której kształcił się absolwent. Informacja o typie szkoły, jej lokalizacji oraz identyfikator pozwalający na udostępnienie konkretnej szkole wyników dotyczących jej absolwentów. Dla absolwentów kontynuujących naukę w systemie oświaty - informacja o typie szkoły, zawodzie i branży, w której kontynuują naukę.", "Podstawowe informacje pozwalające określić, czy kształcenie zawodowe absolwenta zostało zakończone zdaniem egzaminów potwierdzających nabycie umiejętności przewidzianych programem kształcenia - w odniesieniu do uczniów szkół ponadpodstawowych, którzy zdają egzaminy w systemie egzaminów zewnętrznych. Zakres pozyskiwanych danych pozwala określić zarówno, czy absolwent zdał egzamin maturalny, jak też czy zdał egzaminy zawodowe/egzamin czeladniczy.", "Informacje o rozpoczęciu lub zakończeniu studiów (bądź skreśleniu z listy studentów) oraz ich kierunku.", "Informacje pozwalające zidentyfikować okresy i formy w których absolwenci byli zatrudnieni, okresy zarejestrowanego bezrobocia, a także braku aktywności zawodowej (rejestrowanej w ZUS). Sytuację absolwenta w danym miesiącu można określić na podstawie kodów tytułów ubezpieczenia lub świadczenia oraz przypisanych do nich okresów. Wysokość zarobków brutto jest ustalana dzięki informacji o podstawie wymiaru składek ubezpieczeniowych.")) %>% 
+   flextable() %>% #separate_header() %>% 
+    theme_booktabs(separate_with = rows) %>%
+    set_table_properties(width = 1, layout = "autofit") %>%    
+    align_nottext_col(align = "center") %>% 
+  add_footer_lines(values = "Źródło: Opracowanie własne\n\n", top = FALSE) %>% 
+   border_inner_h(part="all")
+tabelka1
+```
+
+[^4]
+
+[^4]: Dodatkowo wykorzystywana jest informacja o przekroczeniu 30--krotności prognozowanego przeciętnego wynagrodzenia miesięcznego w gospodarce narodowej na dany rok kalendarzowy, wraz z informacją o kodzie tytułu ubezpieczenia, co pozwala zidentyfikować osoby, dla których informacja o podstawie wymiaru składek nie stanowi dobrej podstawy do przewidywania wielkości zarobków.
+
+## Zalety i ograniczenia danych rejestrowych
+
+Wykorzystanie danych rejestrowych ma szereg zalet - przede wszystkim dostarcza informacji o pełnej populacji absolwentów danego rocznika, a w szczególności pozwala poznać sytuację mniej licznych zawodów lub grup absolwentów poszczególnych szkół.
+Realizacja corocznego badania na próbie reprezentatywnej, które pozwalałoby na wnioskowanie na podobnym poziomie szczegółowości (agregacji) byłaby ekonomicznie nieracjonalna.
+Wykorzystanie danych rejestrowych pozwala znacząco ograniczyć koszty monitorowania karier absolwentów.
+
+Warto być jednak świadomym szeregu ograniczeń takich źródeł danych.
+Przede wszystkim dane rejestrowe wykorzystywane do niniejszych analiz powstają w wyniku działań rozmaitych użytkowników - pracowników szkół wprowadzających dane do Systemu Informacji Oświatowej, pracodawców przekazujących, w formie elektronicznej lub papierowej, informacje do ZUS, pracowników OKE rejestrujących informacje o wynikach egzaminów itd.
+Wszystkie te czynności są obarczone ryzykiem popełnienia błędów - duża część z nich jest weryfikowana na etapie wprowadzania informacji do baz, ale zdarzają się również dane, które nie zostały jeszcze zweryfikowane przez operatora systemu.
+Stąd, już na etapie przygotowania danych konieczna jest kontrola ich spójności - rekordy danych, które zawierają błędne lub zduplikowane identyfikatory (np. PESEL) muszą zostać usunięte ze zbioru.
+Dane wykorzystywane do analiz są przekazywane przez gestorów w ustawowo określonych terminach, według stanu na określony dzień.
+Warto jednak mieć świadomość, że użytkownicy wielu rejestrów (np. Systemu Informacji Oświatowej - SIO) mają możliwość nie tylko wprowadzania nowych danych, ale także korygowania danych już wprowadzonych.
+Oznacza to, że statystyki, które zostaną opracowane na podstawie tych samych baz, ale według stanu na inny dzień, mogą się różnić.
+
+Ponadto informacje z rejestrów odzwierciedlają uwarunkowania prawne i techniczne obsługujących je systemów.
+Systemy pozwalają na gromadzenie danych w zakresie przewidzianym przez obowiązujące prawo, a dane są wprowadzane zgodnie z regułami ustalonymi przez operatora systemu.
+W związku z tym nie o każdym absolwencie dostępne są informacje w każdym z rejestrów.
+W tym miejscu warto podkreślić, że dane z rejestru ZUS są gromadzone na podstawie informacji przekazywanych przez płatników składek.
+Oznacza to, że dane te mają szereg ograniczeń. Monitoring nie uwzględnia: 
+
+* informacji o absolwentach, którzy kontynuują naukę i jednocześnie podejmują pracę na podstawie umowy-zlecenia. W przypadku takich osób (do 26. roku życia) pracodawcy są zwolnieni z konieczności odprowadzania składek do ZUS - a zatem wykorzystywany rejestr nie pozwala na odnotowanie informacji na temat podejmowania pracy przez takie osoby, 
+* informacji na temat zatrudnienia na podstawie umów o dzieło, od których nie są odprowadzane składki, 
+* informacji na temat zatrudnienia nieformalnego, 
+* informacji na temat pracy podejmowanej u pracodawców działających poza granicami kraju.
+
+System monitoringu nie obejmuje również informacji o rolnikach i członkach ich rodzin, którzy są ubezpieczeni w Kasie Rolniczego Ubezpieczenia Społecznego (KRUS).
+Nie zawiera również informacji z systemów zaopatrzenia emerytalnego, jakimi są objęci funkcjonariusze służb mundurowych lub członkowie ich rodzin oraz sędziowie i prokuratorzy.
+
+## Wskaźniki opisujące sytuację absolwentów -- przewodnik czytelnika
+
+Monitorowanie karier absolwentów  polega na ustalaniu, jaką wartość mają wskaźniki, które opisują ich sytuację zawodową i edukacyjną w poszczególnych miesiącach lub innych odcinkach czasu od zakończenia przez nich nauki. Zmiany w prawie określające funkcjonowanie systemu oświaty wiążą się także ze zmianami w terminologii opisującej różne aspekty edukacji. W celu zwiększenia przystępności tekstu zdecydowano się na pewne uproszczenia w zastosowanym w raporcie nazewnictwie. Jednak poprawna interpretacja wyników w nim przedstawianych wymaga zapoznania się z definicjami najważniejszych wskaźników i pojęć, które zostały zaprezentowane w niniejszym podrozdziale.
+
+**Absolwenci objęci monitoringiem**
+
+Informacje o absolwentach pozyskano z Systemu Informacji Oświatowej według stanu bazy na 15 marca 2024 roku. Absolwentami są uczniowie ostatnich klas, którym w SIO zakończono przypisanie do oddziału wybierając status „Ukończył szkołę”.
+
+**Absolwenci 2022**
+
+Osoby, którym w Systemie Informacji Oświatowej przypisano status absolwenta w 2022 r.
+
+**Młodociany**
+
+Absolwent branżowej szkoły I stopnia, który podczas nauki w ostatniej klasie, w okresie od stycznia do czerwca, przynajmniej przez miesiąc posiadał status pracownika młodocianego, czyli zawartą z pracodawcą umowę o pracę w celu przygotowania zawodowego.
+
+**Niemłodociany**
+
+Absolwent branżowej szkoły I stopnia, który podczas nauki w ostatniej klasie, w okresie od stycznia do czerwca, nie posiadał statusu młodocianego pracownika, czyli nie realizował przygotowania zawodowego u pracodawcy na podstawie umowy o pracę w celu przygotowania zawodowego.
+
+**Status edukacyjno-zawodowy**
+
+Wskaźnik statusu edukacyjno-zawodowego powstaje na podstawie informacji z ZUS oraz SIO i POL-on.
+Informacje przekazywane przez ZUS pozwalają na ustalenie aktywności na rynku pracy - zarówno wykonywania pracy (lub przebywania na urlopach), jak i posiadania statusu osoby bezrobotnej zarejestrowanej w urzędzie pracy.
+W rejestrze ZUS znajdują się również absolwenci zgłoszeni do ubezpieczenia zdrowotnego przez rodziców[^5] lub szkołę/uczelnię, w której kontynuują naukę.
+Z systemu ZUS korzysta zdecydowana większość osób ubezpieczonych.
+Informacje z SIO i POL-on pozwalają stwierdzić fakt kontynuacji nauki - na studiach bądź w szkole należącej do systemu oświaty.
+Wskaźnik jest prezentowany dla kolejnych miesięcy od lipca 2022 (roku ukończenia szkoły) do marca 2024 r. (roku prowadzenia monitoringu).
+Każdy z absolwentów w każdym z analizowanych miesięcy może zostać przypisany do jednej z 5 kategorii wyróżnionych przy konstruowaniu wskaźnika (por. Tabela 2).
+Dane dotyczące statusu edukacyjno-zawodowego w danym miesiącu są agregowane na podstawie szczegółowych informacji na temat pracy lub nauki w poszczególnych okresach.
+Ustalenie statusu pracy w danym miesiącu wymaga przepracowania minimum jednego dnia w tymże miesiącu.
+Ustalając kryterium dla kontynuacji nauki przyjęto minimalny okres trwania epizodu nauki -- 14 dni.
+
+[^5]: "Dziecko może być objęte ubezpieczeniem zdrowotnym jako członek rodziny, dopóki nie skończy 18 lat. Jeśli uczy się dalej w szkole lub zakładzie kształcenia nauczycieli lub odbywa kształcenie w uczelni lub szkole doktorskiej, ma prawo do ubezpieczenia zdrowotnego przy rodzicu, dopóki nie skończy 26 lat. Jeśli ma orzeczenie o znacznym stopniu niepełnosprawności lub równoważne, ma prawo do ubezpieczenia zdrowotnego przy rodzicu bez ograniczenia wieku" Źródło: ZUS, dostęp 11.2021
+
+```{r 'Polska.t2wp', echo=FALSE, results='asis'}
+cat0("Tabela ", tab_num(), ": Szczegółowy opis kategorii wskaźnika statusu edukacyjno-zawodowego\n")
+tabelka2 <- tibble(
+  `Kategoria` = "Znaczenie kategorii",
+  `1. Tylko nauka` = "W takiej sytuacji są osoby, o których wiadomo, że odbywają edukację formalną w Polsce i jednocześnie figurują w rejestrze ZUS z tytułu innego niż aktualne wykonywanie pracy (“innym tytułem” może być w szczególności status osoby bezrobotnej, przebywanie na urlopie macierzyńskim lub wychowawczym) lub nie figurują w rejestrze ZUS z żadnego tytułu, w związku z tym ich sytuacja zawodowa nie jest znana. Nie jest wykluczone, że pracują za granicą u zagranicznego pracodawcy lub korzystając z ubezpieczenia w innym systemie niż ZUS (np. KRUS) albo na podstawie umowy o dzieło lub (jeżeli mają nie więcej niż 26 lat) umowy zlecenia, a także że wykonują działalność nierejestrową lub pracę bez umowy “na czarno”).",
+  `2. Nauka i praca` = "W takiej sytuacji są osoby, o których wiadomo, że odbywają edukację formalną w Polsce, a zarazem figurują w rejestrze ZUS z tytułu aktualnego wykonywania pracy etatowej, prowadzenia indywidualnej działalności gospodarczej albo - ale tylko, jeśli mają więcej niż 26 lat - umowy zlecenia. Nie jest natomiast uwzględniona praca za granicą u zagranicznego pracodawcy, praca związana z korzystaniem z ubezpieczenia w innym systemie niż ZUS (np. KRUS), praca na podstawie umowy o dzieło  - a w przypadku osób, które mają nie więcej niż 26 lat również praca na podstawie umowy zlecenia - działalność nierejestrowa ani praca “na czarno”.",
+  `3. Tylko praca` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju), a zarazem figurują w rejestrze ZUS z tytułu aktualnego wykonywania pracy etatowej, umowy zlecenia lub prowadzenia indywidualnej działalności gospodarczej. 
+Nie jest natomiast uwzględniona praca za granicą u zagranicznego pracodawcy, bez umowy (“na czarno”), praca związana z korzystaniem z ubezpieczenia w innym systemie niż ZUS (np. KRUS), praca na podstawie umowy o dzieło, działalność nierejestrowa ani praca “na czarno”.",
+  `4. Bezrobocie` = "W takiej sytuacji są osoby, które figurują w rejestrze ZUS z tytułu zarejestrowania w powiatowym urzędzie pracy jako bezrobotne - z wyjątkiem osób, które jednocześnie odbywają naukę formalną w Polsce. Absolwentom łączącym status osoby bezrobotnej z odbywaniem edukacji (co jest możliwe w przypadku nauki w szkole dla dorosłych, branżowej szkole II stopnia lub szkole policealnej a także studiowania na studiach niestacjonarnych) przypisywany jest status “Tylko nauka”. Nie jest wykluczone, że osoby zarejestrowane jako bezrobotne wykonują pracę nierejestrową na podstawie umowy o dzieło lub pracę “na czarno”.)",
+  `5. Brak danych o aktywności` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju), a zarazem nie figurują w rejestrze ZUS z żadnego tytułu, w związku z tym ich sytuacja zawodowa nie jest znana. 
+Nie jest wykluczone, że pracują za granicą u zagranicznego pracodawcy lub korzystając z ubezpieczenia w innym systemie niż ZUS (np. KRUS) albo na podstawie umowy o dzieło (jeżeli nie są zarejestrowane jako bezrobotne), , że wykonują pracę nierejestrową lub pracę “na czarno”.") %>%   pivot_longer(everything()) %>% 
+  rename(`Kategoria` = name,
+         `Znaczenie kategorii` = value) %>% 
+   flextable() %>% #separate_header() %>% 
+    theme_booktabs() %>%
+    set_table_properties(width = 1, layout = "autofit") %>%    
+    align_nottext_col(align = "center") %>% add_footer_lines(values = "Źródło: Opracowanie własne\n\n", top = FALSE) %>% 
+   border_inner_h(part="all")
+tabelka2
+```
+
+[^6]
+
+[^6]: Jako pracę „na czarno”, pracę nieformalną lub pracę nierejestrowaną (określenia stosowane w raporcie wymiennie) definiujemy jako: a. pracę najemną wykonywaną bez nawiązania stosunku pracy, czyli bez umowy o pracę, umowy zlecenia, umowy o dzieło lub jakiejkolwiek innej pisemnej umowy pomiędzy pracodawcą i pracownikiem, bez względu na sektor własności (również u osób fizycznych i w indywidualnych gospodarstwach rolnych); praca nie może być również wykonywana na podstawie powołania, mianowania lub wyboru; z tytułu wykonywania pracy nierejestrowanej pracownik nie uzyskuje ubezpieczenia społecznego, a więc uprawnień do korzystania ze świadczeń społecznych; okres wykonywania tej pracy nie jest także zaliczany jako składkowy z punktu widzenia ZUS, a pracodawca nie odprowadza na konto ZUS i Funduszu Pracy odpowiednich sum z tytułu wypłacanego wynagrodzenia; od dochodów z pracy nierejestrowanej nie są płacone podatki osobiste; b. pracę na rachunek własny, jeśli z tytułu prowadzonej działalności gospodarczej nie są realizowane obowiązki finansowe wobec państwa (np. podatki).
+    Źródło definicji: GUS <https://stat.gov.pl/metainformacje/slownik-pojec/pojecia-stosowane-w-statystyce-publicznej/3896,pojecie.html>
+
+**Kontynuowanie nauki** 
+
+Wskaźniki dotyczące form kontynuowania nauki opierają się na danych pozyskanych z dwóch systemów: POL-on (informacja o kontynuowaniu nauki na uczelni w Polsce) oraz SIO (informacja o kontynuowaniu nauki w szkołach należących do systemu oświaty). Warunkiem ustalenia statusu nauki w danej formie w danym miesiącu jest utrzymanie statusu ucznia/studenta przez co najmniej dwa tygodnie w tymże miesiącu. Wskaźniki każdorazowo obliczono jako udział absolwentów, którzy w grudniu roku ukończenia szkoły kontynuują naukę w danej formie (typie szkoły lub na studiach) wśród ogółu absolwentów szkół ponadpodstawowych danego typu w województwie. Absolwent kontynuujący naukę w więcej niż jednej formie (np. w szkole i na studiach) w przypadku każdej z nich jest uwzględniany w grupie osób uczących się. Warto natomiast zwrócić uwagę, że wskaźnik statusu edukacyjno-zawodowego skonstruowano w odmienny sposób -- osoba, która kontynuuje naukę jednocześnie w kilku różnych formach, zostanie zaliczona do grupy osób uczących się w danym miesiącu tylko raz.
+W odniesieniu do absolwentów szkół, po których możliwe jest kontynuowanie nauki na studiach, opisujemy również dziedziny i najczęściej wybierane dyscypliny, w jakich podjęli oni studia. Posługujemy się przy tym oficjalną klasyfikacją Ministerstwa Nauki[^7]: każdy kierunek studiów w Polsce jest przypisany do jednej z 56 dyscyplin[^8], które zostały pogrupowane w 10 dziedzin[^9]. Posługując się nimi możemy opisać tematykę podejmowanych studiów w sposób jednocześnie syntetyczny i użyteczny. Przy tym zgodnie z obowiązującym prawem w ramach systemu monitoringu nie otrzymujemy z systemu POL-on informacji o nazwach kierunków studiów podjętych przez absolwentów, a jedynie o tym, do jakich dyscyplin są one przypisane. W odniesieniu do dziedzin opisujemy wszystkie dziedziny, w których absolwenci danego typu szkoły podjęli studia. W odniesieniu do dyscyplin, z racji ich dużej liczby, opisujemy tylko pięć najczęściej wybieranych dyscyplin, oddzielnie w ramach każdego z pięciu najczęściej wybieranych w ramach danego typu szkoły zawodów[^10] oraz dziesięć najczęściej wybieranych dyscyplin przez absolwentów danego typu szkoły ogółem oraz w podziale na płeć. Jeśli absolwent podjął studia na kilku różnych kierunkach przypisanych do kilku różnych dyscyplin lub dziedzin, to zostanie zliczony w każdej z nich.
+
+[^7]: Aktualna wersja klasyfikacji została zdefiniowana w Rozporządzeniu Ministra Edukacji i Nauki z dnia 11 października 2022 r. w sprawie dziedzin nauki i dyscyplin naukowych oraz dyscyplin artystycznych (Dz.U. 2022 poz. 2202).
+[^8]: Niektóre kierunki, np. indywidualne studia międzywydziałowe/międzydziedzinowe, mogą być przypisane jednocześnie do kilku dyscyplin. W takim przypadku na potrzeby raportowania wyników posługujemy się tą z dyscyplin, która została dla danego kierunku określona jako wiodąca.
+[^9]: Przypisanie konkretnego kierunku studiów do dyscypliny można sprawdzić w publicznie dostępnym serwisie:  https://radon.nauka.gov.pl/dane/studia-prowadzone-na-okreslonym-kierunku
+[^10]: Informacja o profilu oddziału w liceum ogólnokształcącym dla młodzieży i liceum dla dorosłych nie jest zapisywana w Systemie Informacji Oświatowej i nie może być przetwarzana w ramach monitoringu. Dlatego też nie prezentujemy informacji o dziedzinach i dyscyplinach studiów w podziale na profile oddziałów.
+**Przychody z pracy**
+
+Wskaźniki są obliczane na podstawie danych z ZUS i opierają się danych dotyczących podstawy wymiaru składek na ubezpieczenia społeczne oraz ubezpieczenie zdrowotne.
+Dla każdego z absolwentów, w danym miesiącu uwzględniają one wynagrodzenia ze wszystkich źródeł, od których odprowadzono składki do ZUS.
+W związku z powyższym, prezentowane dane nie uwzględniają wynagrodzeń uzyskiwanych z tytułu:
+
+* pracy podejmowanej na podstawie umowy-zlecenia przez uczniów i studentów poniżej 26 roku życia, 
+* pracy podejmowanej za granicą, 
+* pracy na podstawie umowy o dzieło, 
+* pracy nieformalnej ("na czarno").
+
+Ponieważ system monitoringu karier w obecnym kształcie (analogicznie jak system ELA), nie gromadzi danych na temat wymiaru zatrudnienia absolwentów, nie jest możliwe szacowanie zarobków w przeliczeniu na pełen etat. 
+Jest to szczególnie istotne ze względu na kontynuowanie nauki przez wielu absolwentów i łączenie jej z pracą, w części przypadków w niepełnym wymiarze zatrudnienia.
+Ma to także znaczenie dla porównań między kobietami a mężczyznami (częstsze podejmowanie pracy w niepełnym wymiarze wśród kobiet) lub zawodami (problem zatrudnienia półformalnego -- tj. formalne zatrudnienie na minimalną część etatu, pozostała część wynagrodzenia wypłacana nieformalnie).
+Brak informacji o wymiarze etatu stanowi obciążenie dla prezentowanych wyników -- będzie prowadzić do systematycznego zaniżania prezentowanych wartości wynagrodzeń.
+Zestawiając przychody z pracy uzyskiwane przez różne grupy respondentów (wyodrębnione na przykład ze względu na płeć) należy więc pamiętać, że prezentowane wartości nie uwzględniają czasu poświęcanego na wykonywanie pracy zarobkowej - dysproporcje nie świadczą zatem bezpośrednio o nierównościach płacowych.
+Wskaźniki dotyczą nominalnych wartości przychodów uzyskiwanych z pracy, co oznacza, że nie uwzględniają zmian siły nabywczej złotówki. Porównując przychody z pracy z różnych okresów także użyto wartości nominalnych.
+
+Prezentowane szacunki dotyczą średnich przychodów uzyskiwanych miesięcznie przez absolwentów ze wszystkich prac wykonywanych w ostatnim kwartale roku, w którym ukończyli szkołę, w całym 2023 r. i w pierwszym kwartale 2024 r. 
+Dla danego okresu, dla każdego absolwenta wyliczono średni miesięczny przychód ze wszystkich źródeł rejestrowanych przez ZUS z miesięcy, w których taki przychód uzyskiwał. 
+Należy podkreślić, że wyliczane w ten sposób średniomiesięczne wskaźniki uwzględniają przychody z pracy wykonywanej przez dowolną część danego miesiąca.
+W sytuacji, gdy absolwent przepracował np.
+pół miesiąca, jego przychody są niższe, niż gdyby przepracował pełen miesiąc i wpływają na obniżenie wysokości średniomiesięcznego wskaźnika przychodów.
+Dla tak zdefiniowanego wskaźnika wynagrodzeń wyliczono przedstawiane statystyki.
+Prezentowane statystyki mogą się zatem odnosić do pracy podejmowanej w dowolnych miesiącach analizowanego okresu lub w całym tym okresie (w zależności od aktywności zawodowej poszczególnych osób).
+W drugim kroku dane te są dopiero agregowane na poziomie poszczególnych grup -- absolwentów całego kraju, województw lub zawodów.
+
+**Bezrobocie rejestrowane** 
+
+Wskaźniki bezrobocia rejestrowanego obliczono na podstawie danych ZUS, które pozwalają na zidentyfikowanie osób zarejestrowanych w danym miesiącu w urzędach pracy jako osoby bezrobotne.
+Prezentowane dane odnoszą się zatem do bezrobocia rejestrowanego, ale nie ekonomicznego.
+Absolwenci, którzy nie są zarejestrowani w urzędzie pracy mogą wciąż pozostawać bez pracy i jej poszukiwać.
+Warto zarazem podkreślić, iż udział bezrobotnych absolwentów wśród wszystkich absolwentów danej kategorii nie jest stopą bezrobocia rejestrowanego.
+Ta ostatnia stanowi udział zarejestrowanych bezrobotnych wśród osób aktywnych zawodowo (pracujących oraz aktywnie poszukujących pracy, przy czym informacji o ostatnim nie zbiera się w rejestrach).
+Przy obliczaniu wartości wskaźnika za bezrobotnych w danym miesiącu są uznawani absolwenci, którzy byli zarejestrowani w urzędzie pracy przez dowolną część tego miesiąca.
+
+**Świadectwo dojrzałości** 
+
+Wskaźnik otrzymywania świadectwa dojrzałości został obliczony z wykorzystaniem danych z bazy SIO oraz bazy CKE.
+Jest analizowany w odniesieniu do absolwentów liceów ogólnokształcących i techników, które przygotowują swoich uczniów do przystąpienia do egzaminu maturalnego.
+Z rejestru CKE pozyskano informację o absolwentach, którzy uzyskali świadectwo dojrzałości.
+Nie pozyskiwano natomiast informacji o przystępowaniu przez absolwentów do egzaminu maturalnego ani o uzyskaniu przez nich wyniku negatywnego.
+Wskaźnik dla absolwentów z 2022 r. uwzględnia osoby uzyskujące świadectwo dojrzałości w sesji poprawkowej 2022 r. oraz głównej 2023 r.
+Ważne, aby pamiętać, że wskaźnik jest wyliczany w odniesieniu do wszystkich osób, które uzyskały status absolwentów szkoły objętej monitoringiem tzn. uzyskały świadectwo ukończenia szkoły.
+Z kolei publikowane przez Centralną Komisję Egzaminacyjną wskaźniki zdawalności są obliczane jako odsetek osób, które zdały egzamin maturalny wśród tych, które po raz pierwszy przystąpiły do wszystkich części egzaminu w danej sesji.
+Do egzaminu nie przystępują wszyscy absolwenci z danego roku.
+Ponadto CKE uwzględnia w swoich zestawieniach absolwentów z lat ubiegłych (którzy dotychczas nie uzyskali świadectwa lub uzyskali je, ale zdecydowali się poprawić wynik lub zdać egzamin z nowego przedmiotu).
+Podstawa procentowania dla wskaźnika publikowanego przez CKE jest zatem inna niż w przypadku opisywanego tu wskaźnika.
+
+**Dokumenty potwierdzające posiadanie kwalifikacji zawodowych** 
+
+Podobnie jak w przypadku informacji o odsetku absolwentów otrzymujących świadectwo dojrzałości, również informacje o tym, jaka część absolwentów szkół prowadzących kształcenie zawodowe zdobyła dokumenty potwierdzające posiadanie kwalifikacji zawodowych została przygotowana w oparciu o rejestr SIO oraz bazy CKE/OKE.
+Zgodnie z Ustawą, do listy absolwentów z danego roku wygenerowanej z systemu SIO w CKE/OKE dopisywana była informacja o tym, czy i jakie dyplomy, świadectwa i certyfikaty dany absolwent zdobył.
+Dostępne w SIO informacje dotyczące egzaminów czeladniczych pochodzą z izb rzemieślniczych.
+Dzięki wszystkim tym danym przygotowano wskaźniki informujące o tym, jaka część absolwentów z danego rocznika zdobyła dyplom potwierdzający kwalifikacje zawodowe/dyplom zawodowy lub świadectwo czeladnicze, jaka część zdobyła świadectwa potwierdzające kwalifikację w zawodzie/certyfikaty kwalifikacji zawodowej[^11], ale nie zdobyła dyplomu, a jaka część nie zdobyła żadnego z tych dokumentów.
+
+Warto przy tym zwrócić uwagę, że w zależności od zawodu zdobycie dyplomu wiąże się z koniecznością posiadania różnej liczby świadectw/certyfikatów oraz odpowiedniego poziomu wykształcenia.
+W rozpatrywanym okresie, aby uzyskać dyplom trzeba było potwierdzić od jednej do dwóch kwalifikacji.
+Przy czym zawody jednokwalifikacyjne były nauczane głównie w branżowych szkołach I stopnia.
+Z kolei zawody dwukwalifikacyjne najczęściej nauczane były w technikach[^12]. Jest to o tyle ważne, że jeżeli na zawód składa się więcej kwalifikacji, to można być absolwentem z częścią świadectw/certyfikatów, jednak bez dyplomu. Takie sytuacje częściej będą się pojawiać w technikach i szkołach policealnych. Absolwenci techników  z 2022 r. mogli zdawać egzaminy tylko w formule z 2017 r. Natomiast absolwenci branżowych szkół I stopnia z 2022 r. zarówno w formule z 2017r. jak i w formule z 2019 r., to jest w oparciu o podstawy programowe z 2017 r. i z 2019 r. (w 2022 r. naukę w branżowych szkołach I stopnia ukończyły dwa roczniki absolwentów, zarówno ci którzy wcześniej ukończyli gimnazjum jak i ci, którzy ukończyli ośmioletnią szkołę podstawową). Z kolei absolwenci szkół policealnych z 2022 r. mogli przystępować tylko do egzaminu w formule z  2019 r. Informacje te przedstawia Tabela 3. Uczniowie i słuchacze realizujący podstawy programowe z 2017 r. nie mieli obowiązku przystępowania do egzaminów potwierdzających kwalifikacje w zawodzie - taki obowiązek wprowadzono dla osób realizujących podstawy programowe z 2019 r.
+
+[^11]: Będące elementami składowymi dyplomów - dopiero zdobycie kompletu kwalifikacji przewidzianych dla danego zawodu oraz uzyskania odpowiedniego poziomu wykształcenia pozwala na uzyskanie dyplomu.
+
+[^12]: W klasyfikacji zawodów szkolnictwa zawodowego z 2017 r. i klasyfikacji zawodów szkolnictwa branżowego z 2019 r. w zawodach wyodrębnione zostały od 1 do 2 kwalifikacji.
+
+```{r 'Polska.t3wp', echo=FALSE, results='asis'}
+cat0("Tabela ", tab_num(), ": Podstawa programowa, według której absolwenci przystępowali do egzaminów  w podziale na typ szkół.\n")
+tabelka3 <- tibble(
+ `Rok ukończenia szkoły`= c(ewaluowany_rok_abs),
+ `Typ szkoły_Branżowa Szkoła I st` = 
+   ifelse(ewaluowany_rok_abs >= 2022, "podst. prog. 2019", 
+          ifelse(ewaluowany_rok_abs >= 2020, "podst. prog. 2017", 
+                 "podst. prog. 2012")),
+ `Typ szkoły_Branżowa Szkoła II st` = 
+   ifelse(ewaluowany_rok_abs >= 2021, "podst. prog. 2019", 
+          "podst. prog. 2017"),
+ `Typ szkoły_Technikum` = 
+   ifelse(ewaluowany_rok_abs >= 2024, "podst. prog. 2019", 
+          ifelse(ewaluowany_rok_abs >= 2021, "podst. prog. 2017", 
+                 "podst. prog. 2012")),
+ `Typ szkoły_Szkoła policealna` = 
+   ifelse(ewaluowany_rok_abs >= 2022, "podst. prog. 2019", 
+          ifelse(ewaluowany_rok_abs >= 2020, "podst. prog. 2017 lub 2019", 
+                 "podst. prog. 2012 lub 2017"))) %>% 
+   flextable() %>% separate_header() %>% 
+    theme_booktabs() %>%
+    set_table_properties(width = 1, layout = "autofit") %>%    
+    align(part = "all", j = 2:4, align = "center") %>% 
+   border_inner_h(part="all")
+tabelka3
+cat0("\n\n") 
+```
+
+
+Dodatkowo należy pamiętać, że absolwenci BS I, którzy w okresie nauki byli młodocianymi pracownikami, mogli (ale nie musieli) przystąpić do egzaminu czeladniczego organizowanego przez komisje egzaminacyjne izb rzemieślniczych.
+Po zdaniu egzaminu czeladniczego wydawane jest świadectwo czeladnicze potwierdzające uzyskanie tytułu czeladnika w zawodzie. Ustawa zobowiązuje izby rzemieślnicze do przekazywania informacji dotyczących świadectw czeladniczych do SIO. Na dzień pobierania danych na potrzeby przeprowadzenia monitoringu jedynie część izb w skali kraju dopełniła ustawowego obowiązku przekazania danych do SIO.
+Z tego względu informacja o poziomie uzyskiwania dokumentów potwierdzających posiadanie kwalifikacji zawodowych przez absolwentów branżowych szkół I stopnia kształcących się jako pracownicy młodociani może być obciążona przez brak informacji na temat uzyskania kwalifikacji zawodowych przez absolwentów, którzy zdawali egzaminy w systemie rzemiosła. Wszystkie wyniki dla absolwentów BS I przedstawione zostały osobno dla pracowników młodocianych oraz dla pozostałych absolwentów.
+
+# Streszczenie raportu

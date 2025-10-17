@@ -1,0 +1,206 @@
+
+
+<br>
+<br>
+<br>
+
+
+
+```{r '{{typ_szk}},s6setup', echo=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE, results='asis', 
+                      fig.width = 10, fig.height = 10, fig.path = "figPOL/", 
+                      out.width = "100%")
+typ_szk <-  "{{typ_szk}}"
+ewaluowana_edycja <- {{edycja}}
+ewaluowany_rok_abs <- {{rok_abs}}
+ewaluowany_rok <- {{rok}}
+if ({{edycja}} == {{rok_abs}} + 2) {
+  ewaluowany_kolejny_rok = {{rok_abs}} + 1
+}
+
+set_flextable_defaults(
+#  font.family = "Cambria",
+  font.size = 10,
+  padding = 2,
+  border.color = "#CCCCCC",
+  line_spacing = 1.08,
+  digits = 2,
+  decimal.mark = ",",
+  big.mark = " ",
+  na_str = "<na>"
+)
+```
+
+
+```{r '{{typ_szk}},s6w1', fig.width = 10, fig.height = 6}
+if (typ_szk %in% "Branżowa szkoła I stopnia") {
+    cat0('# Absolwenci ', dopelniacz(typ_szk), " z ", ewaluowany_rok_abs, " r. {-} \n\n")
+cat0('## Absolwenci ', dopelniacz(typ_szk), " ogółem  {-} \n\n")
+cat0("### Status edukacyjno-zawodowy - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. {-} \n\n")
+}
+
+if (typ_szk %in% c("Młodociani w Branżowej szkole I stopnia", 
+                   "Niemłodociani w Branżowej szkole I stopnia")) {
+    cat0('## Absolwenci ', dopelniacz(typ_szk), " z ", ewaluowany_rok_abs, " r. {-} \n\n")
+
+cat0("### Status edukacyjno-zawodowy - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. {-} \n\n")
+}
+
+if (typ_szk %ni% szkoly_branzowe) {
+cat0('# Absolwenci ', dopelniacz(typ_szk), " z ", ewaluowany_rok_abs, " r. {-} \n\n")
+
+cat0("## Status edukacyjno-zawodowy - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. {-} \n\n")
+}
+
+if (tylko_tabele == FALSE) {
+cat0("Wykres ", wyk_num(), ": Status edukacyjno-zawodowy w poszczególnych miesiącach od lipca roku zakończenia nauki - absolwenci ", dopelniacz(typ_szk), " z ", ewaluowany_rok_abs, " r. - ogółem\n\n")
+
+
+(wykresStatusy %+%
+    dane_wyk_S7_mscrok(pelna_finalna_ramka_wskaznikow, 
+                       typ_szk, ewaluowany_rok_abs)) |> # podmiana danych
+  zmien_wielkosc_czcionek(baseSize = 14) |> # zmiana wielkości czcionki
+  zmien_prog_pokazywania_etykiet(hideBelow = 0.04) |> # zmiana progu ukrywania etykiet
+  zmien_rok_w_podpisie(ewaluowana_edycja) # zmiana roku w podpisie
+}
+
+```
+
+```{r '{{typ_szk}},s6t1'}
+
+cat0("Tabela ", tab_num(), ": Status edukacyjno-zawodowy w poszczególnych miesiącach od lipca roku zakończenia nauki - absolwenci ", dopelniacz(typ_szk), " z ", ewaluowany_rok_abs, " r. - ogółem\n\n")
+
+dane_tab_S7_mscrok(pelna_finalna_ramka_wskaznikow, 
+                   typ_szk, ewaluowany_rok_abs) %>%
+  gentab_tab_S7(ewaluowana_edycja)
+
+```
+
+```{r '{{typ_szk}},s6w2', fig.height = 4}
+if (tylko_tabele == FALSE) {
+  cat0("Wykres ", wyk_num(), ": Status edukacyjno-zawodowy w grudniu ", ewaluowany_rok, " r. - absolwenci ", dopelniacz(typ_szk), " z ", ewaluowany_rok_abs, " r. - w podziale na płeć\n\n")
+
+    
+(wykresStatusyPlec %+%
+    dane_wyk_S7_plec(pelna_finalna_ramka_wskaznikow, 
+                     typ_szk, ewaluowany_rok_abs, ewaluowany_rok)) |> # podmiana danych
+  zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
+  zmien_prog_pokazywania_etykiet(hideBelow = 0.04) |> # zmiana progu ukrywania etykiet
+  zmien_rok_w_podpisie(ewaluowana_edycja) # zmiana roku w podpisie
+}
+```
+
+```{r '{{typ_szk}},s6t2'}
+cat0("Tabela ", tab_num(), ": Status edukacyjno-zawodowy w grudniu ", ewaluowany_rok, " r. - absolwenci ", dopelniacz(typ_szk), " z ", ewaluowany_rok_abs, " r. - w podziale na płeć\n\n")
+ 
+dane_tab_S7_plec(pelna_finalna_ramka_wskaznikow, 
+                 typ_szk, ewaluowany_rok_abs, ewaluowany_rok) %>% 
+  gentab_tab_S7(ewaluowana_edycja)
+
+```
+
+
+```{r '{{typ_szk}},s6w3', fig.height = 4}
+if (ewaluowana_edycja == (ewaluowany_rok_abs + 2) &&
+    tylko_tabele == FALSE) {
+  cat0("Wykres ", wyk_num(), ": Status edukacyjno-zawodowy w grudniu ", ewaluowany_kolejny_rok, " r. - absolwenci ", dopelniacz(typ_szk), " z ", ewaluowany_rok_abs, " r. - w podziale na płeć\n\n")
+
+    
+(wykresStatusyPlec %+%
+    dane_wyk_S7_plec(pelna_finalna_ramka_wskaznikow, 
+                     typ_szk, ewaluowany_rok_abs, ewaluowany_kolejny_rok)) |> # podmiana danych
+  zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
+  zmien_prog_pokazywania_etykiet(hideBelow = 0.04) |> # zmiana progu ukrywania etykiet
+  zmien_rok_w_podpisie(ewaluowana_edycja) # zmiana roku w podpisie
+}
+```
+
+```{r '{{typ_szk}},s6t3'}
+if (ewaluowana_edycja == (ewaluowany_rok_abs + 2)) {
+cat0("Tabela ", tab_num(), ": Status edukacyjno-zawodowy w grudniu ", ewaluowany_kolejny_rok, " r. - absolwenci ", dopelniacz(typ_szk), " z ", ewaluowany_rok_abs, " r. - w podziale na płeć\n\n")
+ 
+dane_tab_S7_plec(pelna_finalna_ramka_wskaznikow, 
+                 typ_szk, ewaluowany_rok_abs, ewaluowany_kolejny_rok) %>% 
+  gentab_tab_S7(ewaluowana_edycja)
+}
+```
+
+
+```{r '{{typ_szk}},s6w4'}
+if (tylko_tabele == FALSE && 
+    typ_szk %in% szkoly_z_zawodem) {
+cat0("Wykres ", wyk_num(), ": Status edukacyjno-zawodowy w grudniu ", ewaluowany_rok, " r. - absolwenci ", dopelniacz(typ_szk), " z ", ewaluowany_rok_abs, " r. - w podziale na zawody\n\n")
+
+
+(wykresStatusyZawod %+%
+    dane_wyk_S7_zaw(pelna_finalna_ramka_wskaznikow, 
+                    typ_szk, ewaluowany_rok_abs, ewaluowany_rok)) |> # podmiana danych
+  zmien_wielkosc_czcionek(baseSize = 14) |> # zmiana wielkości czcionki
+  zmien_prog_pokazywania_etykiet(hideBelow = 0.04) |> # zmiana progu ukrywania etykiet
+  zmien_rok_w_podpisie(ewaluowana_edycja) # zmiana roku w podpisie  
+}
+```
+
+```{r '{{typ_szk}},s6t4'}
+if (typ_szk %in% szkoly_z_zawodem)  {
+cat0("Tabela ", tab_num(), ": Status edukacyjno-zawodowy w grudniu ", ewaluowany_rok, " r. - absolwenci ", dopelniacz(typ_szk), " z ", ewaluowany_rok_abs, " r. - w podziale na zawody\n\n")
+
+ 
+
+dane_tab_S7_zaw(pelna_finalna_ramka_wskaznikow, 
+                typ_szk, ewaluowany_rok_abs, ewaluowany_rok, tylko_tabele) %>% 
+  gentab_tab_S7(ewaluowana_edycja)
+}
+```
+
+
+```{r '{{typ_szk}},s6w5'}
+if (ewaluowana_edycja == (ewaluowany_rok_abs + 2) &&
+    tylko_tabele == FALSE && 
+    typ_szk %in% szkoly_z_zawodem) {
+cat0("Wykres ", wyk_num(), ": Status edukacyjno-zawodowy w grudniu ", ewaluowany_kolejny_rok, " r. - absolwenci ", dopelniacz(typ_szk), " z ", ewaluowany_rok_abs, " r. - w podziale na zawody\n\n")
+
+
+(wykresStatusyZawod %+%
+    dane_wyk_S7_zaw(pelna_finalna_ramka_wskaznikow, 
+                    typ_szk, ewaluowany_rok_abs, ewaluowany_kolejny_rok)) |> # podmiana danych
+  zmien_wielkosc_czcionek(baseSize = 14) |> # zmiana wielkości czcionki
+  zmien_prog_pokazywania_etykiet(hideBelow = 0.04) |> # zmiana progu ukrywania etykiet
+  zmien_rok_w_podpisie(ewaluowana_edycja) # zmiana roku w podpisie  
+}
+```
+
+```{r '{{typ_szk}},s6t5'}
+if (ewaluowana_edycja == (ewaluowany_rok_abs + 2) &&
+    typ_szk %in% szkoly_z_zawodem)  {
+cat0("Tabela ", tab_num(), ": Status edukacyjno-zawodowy w grudniu ", ewaluowany_kolejny_rok, " r. - absolwenci ", dopelniacz(typ_szk), " z ", ewaluowany_rok_abs, " r. - w podziale na zawody\n\n")
+
+ 
+
+dane_tab_S7_zaw(pelna_finalna_ramka_wskaznikow, 
+                typ_szk, ewaluowany_rok_abs, ewaluowany_kolejny_rok, tylko_tabele) %>% 
+  gentab_tab_S7(ewaluowana_edycja)
+}
+```
+
+
+```{r '{{typ_szk}},s6t6'}
+cat0("Tabela ", tab_num(), ": Status edukacyjno-zawodowy w grudniu ", ewaluowany_rok, " r. - absolwenci ", dopelniacz(typ_szk), " z ", ewaluowany_rok_abs, " r. - w podziale na powiaty\n\n")
+ 
+dane_tab_S7_pow(pelna_finalna_ramka_wskaznikow, 
+                typ_szk, ewaluowany_rok_abs, ewaluowany_rok) %>% 
+  gentab_tab_S7(ewaluowana_edycja) 
+```
+
+
+```{r '{{typ_szk}},s6t7'}
+if (ewaluowana_edycja == (ewaluowany_rok_abs + 2)) {
+  cat0("Tabela ", tab_num(), ": Status edukacyjno-zawodowy w grudniu ", ewaluowany_kolejny_rok, " r. - absolwenci ", dopelniacz(typ_szk), " z ", ewaluowany_rok_abs, " r. - w podziale na powiaty\n\n")
+ 
+dane_tab_S7_pow(pelna_finalna_ramka_wskaznikow, 
+                typ_szk, ewaluowany_rok_abs, ewaluowany_kolejny_rok) %>% 
+  gentab_tab_S7(ewaluowana_edycja) 
+}
+```
+
+

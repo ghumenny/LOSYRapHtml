@@ -1,0 +1,95 @@
+
+<br> <br> <br>
+
+```{r 'Polska.meta.setup',  echo=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE, results='asis', 
+                      fig.width = 10, fig.height = 10, fig.path = "figPOL/", 
+                      out.width = "100%")
+
+ewaluowana_edycja <- {{edycja}}
+ewaluowany_rok_abs <- {{rok_abs}}
+ewaluowany_rok <- {{rok}}
+if ({{edycja}} == {{rok_abs}} + 2) {
+  ewaluowany_kolejny_rok = {{rok_abs}} + 1
+} 
+
+set_flextable_defaults(
+#  font.family = "Cambria",
+  font.size = 10,
+  padding = 2,
+  border.color = "#CCCCCC",
+  line_spacing = 1.08,
+  digits = 2,
+  decimal.mark = ",",
+  big.mark = " ",
+  na_str = "<na>"
+)
+```
+
+# Charakterystyka absolwentów objętych monitoringiem
+
+## Absolwenci poszczególnych typów szkół z `r ewaluowany_rok_abs` r. w ujęciu krajowym
+
+
+```{r 'Polska.meta.t1', results='asis'}
+
+cat0("Tabela ", tab_num(), ": Struktura populacji absolwentów z ", ewaluowany_rok_abs, " r. objętych monitoringiem według typów szkół\n\n")    
+  
+tabelka <- dane_tab_meta_typsz_og(pelna_finalna_ramka_wskaznikow, 
+                       ewaluowany_rok_abs) %>% 
+  gentab_typsz_flext_og(ewaluowana_edycja)
+tabelka
+```
+
+```{r 'Polska.meta.w1', fig.width=10, fig.height=4}
+if (tylko_tabele == FALSE) {
+cat0("Wykres ", wyk_num(), ": Struktura populacji absolwentów objętych monitoringiem według typów szkół\n")
+
+wykresik <- (wykresTypySzkol %+% 
+    dane_wyk_meta_typsz_og(pelna_finalna_ramka_wskaznikow, 
+                           ewaluowany_rok_abs)) |> # podmiana danych
+  zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
+  zmien_prog_pokazywania_etykiet(hideBelow = 0.04) |> # zmiana progu ukrywania etykiet
+  zmien_rok_w_podpisie(ewaluowana_edycja) # zmiana roku w podpisie
+print(wykresik)
+}
+
+```
+
+```{r 'Polska.meta.t2'}
+cat0("## Absolwenci poszczególnych typów szkół z ", ewaluowany_rok_abs, " r. w ujęciu krajowym – w podziale na płeć\n\n")
+
+cat0("Tabela ", tab_num(), ": Struktura absolwentów objętych monitoringiem według typów szkół i płci z roku ", ewaluowany_rok_abs, "\n\n")
+  
+tabelka <- dane_tab_meta_typsz_plec(pelna_finalna_ramka_wskaznikow, 
+                         ewaluowany_rok_abs) %>% 
+  gentab_typsz_flext_plec(ewaluowana_edycja)
+tabelka
+```
+
+```{r 'Polska.meta.w2', fig.width=10, fig.height=4}
+if (tylko_tabele == FALSE) {
+  cat0("Wykres ", wyk_num(), ": Struktura absolwentów objętych monitoringiem według typów szkół i płci z roku ", ewaluowany_rok_abs, "\n\n")    
+wykresik <- (wykresPlec %+% 
+    dane_wyk_meta_typsz_plec(pelna_finalna_ramka_wskaznikow, 
+                             ewaluowany_rok_abs)) |> # podmiana danych
+  zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
+  zmien_prog_pokazywania_etykiet(hideBelow = 0.04) |> # zmiana progu ukrywania etykiet
+  zmien_rok_w_podpisie(ewaluowana_edycja) # zmiana roku w podpisie
+print(wykresik)
+}
+```
+
+
+```{r 'Polska.meta.t4'}
+cat0("## Absolwenci poszczególnych typów szkół w ujęciu krajowym w 10 najpopularniejszych zawodach\n\n")
+
+cat0("Tabela ", tab_num(), ": Zawody o największej liczbie absolwentów objętych monitoringiem według typów szkół z roku ", ewaluowany_rok_abs, "\n\n")
+  
+tabelka <- dane_wyk_meta_typsz_zaw(pelna_finalna_ramka_wskaznikow, 
+                        ewaluowany_rok_abs) %>% 
+  gentab_typsz_flext_zaw(ewaluowana_edycja)
+tabelka
+```
+
+**W dalszej części raportu wyniki są analizowane wyłącznie zbiorczo i przedstawiane dla grup liczących co najmniej 10 osób.**
