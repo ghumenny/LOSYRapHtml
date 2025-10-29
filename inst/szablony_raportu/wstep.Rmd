@@ -1,20 +1,25 @@
 ---
+title: "Raport wojewódzki z monitoringu karier absolwentów szkół ponadpodstawowych i ponadgimnazjalnych"
+
 output:
-  word_document2:
-    teoc: yes
-    toc_depth: 2
-editor_options: 
-  markdown: 
-    wrap: sentence
+  html_document:
+    includes:
+      after_body: logo_mlezaimd_dol.html
+      before_body: logo_mlezaimd_gora.html
+    toc: yes
+    toc_float: yes
+    toc_depth: 3
+    theme: flatly
 ---
 
 <br> <br> <br>
 
 ```{r 'Polska.wstep.setup',  echo=FALSE, warning=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE, results='asis', 
-                      fig.width = 10, fig.height = 10, fig.path = "figPOL/", 
+                      fig.width = 10, fig.height = 10, fig.path = "fig/", 
                       out.width = "100%")
 
+nazwa_woj <- "{{woj_nazwa}}"
 ewaluowana_edycja <- {{edycja}}
 ewaluowany_rok_abs <- {{rok_abs}}
 ewaluowany_rok <- {{rok}}
@@ -36,6 +41,8 @@ set_flextable_defaults(
 ```
 
 # Wprowadzenie 
+
+Raport ten dotyczy sytuacji absolwentów szkół ponadpodstawowych i ponadgimnazjalnych z województwa `r dopelniacz_w(nazwa_woj)`, którzy ukończyli naukę w `r ewaluowany_rok_abs` r.  
 
 ## Cel i podstawy prawne monitoringu
 

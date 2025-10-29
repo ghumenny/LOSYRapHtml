@@ -8,8 +8,9 @@
 
 ```{r '{{typ_szk}},W1setup', echo=FALSE, warning=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE, results='asis', 
-                      fig.width = 10, fig.height = 10, fig.path = "figPOL/", 
+                      fig.width = 10, fig.height = 10, fig.path = "fig/", 
                       out.width = "100%")
+nazwa_woj <- "{{woj_nazwa}}"
 typ_szk <-  "{{typ_szk}}"
 ewaluowana_edycja <- {{edycja}}
 ewaluowany_rok_abs <- {{rok_abs}}
@@ -41,69 +42,69 @@ cat0("## Przychody - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs
 }
 
 if (typ_szk %ni% "Szkoła specjalna przysposabiająca do pracy") {
-cat0("Tabela ", tab_num(), ": Średnie miesięczne przychody w czwartym kwartale ", ewaluowany_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. - w podziale na płeć\n\n")
+cat0("Tabela ", tab_num(), ": Średnie miesięczne przychody w czwartym kwartale ", ewaluowany_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z województwa ", dopelniacz_w(nazwa_woj), " - w podziale na płeć\n\n")
   
-dane_tab_W1(pelna_finalna_ramka_wskaznikow, 
+dane_tab_W1(pelna_finalna_ramka_wskaznikow, woj_nazwa,
             typ_szk, "sexf", ewaluowany_rok_abs, 
             ewaluowany_rok, tylko_tabele) %>%
-  gentab_tab_D(ewaluowana_edycja)
+  gentab_tab_dt(ewaluowana_edycja)
 }
 
 ```
 
 ```{r '{{typ_szk}},W1t2'}
 if (typ_szk %in% szkoly_z_zawodem) {
-cat0("Tabela ", tab_num(), ": Średnie miesięczne przychody w czwartym kwartale ", ewaluowany_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. - w podziale na zawody o największej liczbie absolwentów\n\n")
+cat0("Tabela ", tab_num(), ": Średnie miesięczne przychody w czwartym kwartale ", ewaluowany_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z województwa ", dopelniacz_w(nazwa_woj), " - w podziale na zawody o największej liczbie absolwentów\n\n")
   
-dane_tab_W1(pelna_finalna_ramka_wskaznikow, 
+dane_tab_W1(pelna_finalna_ramka_wskaznikow, woj_nazwa, 
             typ_szk, "nazwa_zaw", ewaluowany_rok_abs, 
             ewaluowany_rok, tylko_tabele) %>%
-  gentab_tab_D(ewaluowana_edycja)
+  gentab_tab_dt(ewaluowana_edycja)
 }
 ```
 
 ```{r '{{typ_szk}},W1t3'}
 if (ewaluowana_edycja == (ewaluowany_rok_abs + 2) &&
     typ_szk %ni% "Szkoła specjalna przysposabiająca do pracy") {
-   cat0("Tabela ", tab_num(), ": Średnie miesięczne przychody w całym ", ewaluowany_kolejny_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. - ogółem i w podziale na płeć\n\n")
+   cat0("Tabela ", tab_num(), ": Średnie miesięczne przychody w całym ", ewaluowany_kolejny_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z województwa ", dopelniacz_w(nazwa_woj), " - ogółem i w podziale na płeć\n\n")
   
-dane_tab_W1(pelna_finalna_ramka_wskaznikow, 
+dane_tab_W1(pelna_finalna_ramka_wskaznikow, woj_nazwa, 
             typ_szk, "sexf", ewaluowany_rok_abs, 
             ewaluowany_kolejny_rok, tylko_tabele) %>%
-  gentab_tab_D(ewaluowana_edycja)
+  gentab_tab_dt(ewaluowana_edycja)
 }
 ```
 
 ```{r '{{typ_szk}},W1t4'}
 if (ewaluowana_edycja == (ewaluowany_rok_abs + 2) &&
     typ_szk %in% szkoly_z_zawodem) {
-cat0("Tabela ", tab_num(), ": Średnie miesięczne przychody w całym ", ewaluowany_kolejny_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. - w podziale na zawody o największej liczbie absolwentów\n\n")
+cat0("Tabela ", tab_num(), ": Średnie miesięczne przychody w całym ", ewaluowany_kolejny_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z województwa ", dopelniacz_w(nazwa_woj), " - w podziale na zawody o największej liczbie absolwentów\n\n")
   
-dane_tab_W1(pelna_finalna_ramka_wskaznikow, 
+dane_tab_W1(pelna_finalna_ramka_wskaznikow, woj_nazwa, 
             typ_szk, "nazwa_zaw", ewaluowany_rok_abs, 
             ewaluowany_kolejny_rok, tylko_tabele) %>%
-  gentab_tab_D(ewaluowana_edycja)
+  gentab_tab_dt(ewaluowana_edycja)
 }
 ```
 
 ```{r '{{typ_szk}},W1t5'}
 
-   cat0("Tabela ", tab_num(), ": Średnie miesięczne przychody w pierwszym kwartale ", ewaluowana_edycja," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. - ogółem i w podziale na płeć\n\n")
+   cat0("Tabela ", tab_num(), ": Średnie miesięczne przychody w pierwszym kwartale ", ewaluowana_edycja," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z województwa ", dopelniacz_w(nazwa_woj), " - ogółem i w podziale na płeć\n\n")
 if (typ_szk %ni% "Szkoła specjalna przysposabiająca do pracy") {  
-dane_tab_W1(pelna_finalna_ramka_wskaznikow, 
+dane_tab_W1(pelna_finalna_ramka_wskaznikow, woj_nazwa, 
             typ_szk, "sexf", ewaluowany_rok_abs, 
             ewaluowana_edycja, tylko_tabele) %>%
-  gentab_tab_D(ewaluowana_edycja)
+  gentab_tab_dt(ewaluowana_edycja)
 }
 ```
 
 ```{r '{{typ_szk}},W1t6'}
 if (typ_szk %in% szkoly_z_zawodem) {
-cat0("Tabela ", tab_num(), ": Średnie miesięczne przychody w pierwszym kwartale ", ewaluowana_edycja," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. - w podziale na zawody o największej liczbie absolwentów\n\n")
+cat0("Tabela ", tab_num(), ": Średnie miesięczne przychody w pierwszym kwartale ", ewaluowana_edycja," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z województwa ", dopelniacz_w(nazwa_woj), " - w podziale na zawody o największej liczbie absolwentów\n\n")
   
-dane_tab_W1(pelna_finalna_ramka_wskaznikow, 
+dane_tab_W1(pelna_finalna_ramka_wskaznikow, woj_nazwa, 
             typ_szk, "nazwa_zaw", ewaluowany_rok_abs, 
             ewaluowana_edycja, tylko_tabele) %>%
-  gentab_tab_D(ewaluowana_edycja)
+  gentab_tab_dt(ewaluowana_edycja)
 }
 ```

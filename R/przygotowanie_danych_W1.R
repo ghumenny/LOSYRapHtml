@@ -2,37 +2,35 @@
 #' @description Funkcja filtruje i przetwarza dane z pełnej ramki wskaźników,
 #'   aby przygotować je do generowania tabel. Tworzy ramkę danych
 #'   w formacie będącym wejściem do funkcji gentab_tab_D z tego pakietu.
-#' @param pelna_finalna_ramka_wskaznikow Ramka danych zawierająca pełne wyniki wskaźników.
+#' @param ramka_danych Ramka danych zawierająca pełne wyniki wskaźników.
 #'   Oczekuje, że kolumna 'wynik' zawiera zagnieżdżone ramki danych.
+#' @param wartosc_filtrujaca Wartość (np. nazwa województwa), której szukamy.
 #' @param typ_szk Zmienna tekstowa opisująca typ szkoły.
-#' @param kryterium Zmienna tekstowa opisująca kryterium płec(sexf) lub
-#'        zawód(nazwa_zaw).
-#' @param rok_absolwentow Liczba całkowita reprezentująca rok absolwentów do filtrowania.
+#' @param kryterium Zmienna tekstowa: "sexf" (dla płci) lub "nazwa_zaw" (dla zawodu).
+#' @param rok_absolwentow Liczba całkowita reprezentująca rok absolwentów.
 #' @param rok Liczba całkowita reprezentująca rok do filtrowania.
-#' @param tylko_tabele parametr TRUE/FALSE przekazywany z głównej funkcji
-#'   generującej raport - jeśli FALSE to przycina tabele z zawodami do 10
-#'   najliczniejszych zawodów, jeśli TRUE to raport generuje tabele zawodów bez
-#'   przycinania
+#' @param typ Nazwa kolumny, po której filtrujemy. Domyślnie `WOJ_NAZWA`.
+#'   Podawana bez cudzysłowu.
 #' @return Ramka danych typu tibble w finalnym formacie do zasilania tabel.
 #' @importFrom dplyr %>% filter pull select mutate across where rename matches
-#' @importFrom dplyr ends_with rename_with
+#'   relocate any_of if_all all_of
 #' @importFrom rlang .data
-#' @importFrom stringr str_replace
 #' @importFrom tibble tibble
 #' @export
-dane_tab_W1 <- function(pelna_finalna_ramka_wskaznikow,
+dane_tab_W1 <- function(ramka_danych,
+                        wartosc_filtrujaca,
                         typ_szk, kryterium, rok_absolwentow,
-                        rok, tylko_tabele) {
+                        rok,
+                        typ = WOJ_NAZWA) {
 
-  rok_kal <- rok
-  dane_wejsciowe <- pelna_finalna_ramka_wskaznikow %>%
+  dane_wejsciowe <- ramka_danych %>%
     filter(
-      .data$WOJ_NAZWA == "Polska",
+      if_all(all_of(typ), ~ . ==  wartosc_filtrujaca),
       .data$wskaznik == "W1",
       .data$kryterium == {{kryterium}},
-      .data$rok == rok_kal,
+      .data$rok == {{rok}},
       .data$typ_szk2 == {{typ_szk}},
-      .data$rok_abs == rok_absolwentow
+      .data$rok_abs == {{rok_absolwentow}}
     ) %>%
     pull(.data$wynik) %>% `[[`(1)
 
@@ -60,15 +58,11 @@ dane_tab_W1 <- function(pelna_finalna_ramka_wskaznikow,
     dane_wyjsciowe <- dane_wyjsciowe  %>%
       dplyr::rename(Płeć = sexf)
   } else if ({{kryterium}} == "nazwa_zaw") {
-    if(tylko_tabele == FALSE) {
-      dane_wyjsciowe <- dane_wyjsciowe  %>%
-        slice(1:10) %>%
-        dplyr::rename(Zawód = nazwa_zaw)
-    } else {
-      dane_wyjsciowe <- dane_wyjsciowe %>%
-        dplyr::rename(Zawód = nazwa_zaw)
-    }
+    dane_wyjsciowe <- dane_wyjsciowe %>%
+      dplyr::rename(Zawód = nazwa_zaw)
   }
+  dane_wyjsciowe <- dane_wyjsciowe %>%
+    dplyr::relocate(any_of(c("Płeć", "Zawód")))
 
   return(dane_wyjsciowe)
 }

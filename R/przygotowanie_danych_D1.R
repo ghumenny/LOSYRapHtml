@@ -3,26 +3,32 @@
 #'   aby przygotować je do generowania wykresu. Tworzy ramkę danych
 #'   z kolumnami `dyplom`, `plec`, oraz `pct` (jako odsetek) w formacie
 #'   będącym wejściem do funkcji wykresDyplomyPlec z pakietu LOSYkolory.
-#' @param pelna_finalna_ramka_wskaznikow Ramka danych zawierająca pełne wyniki wskaźników.
+#' @param ramka_danych Ramka danych zawierająca pełne wyniki wskaźników.
 #'   Oczekuje, że kolumna 'wynik' zawiera zagnieżdżone ramki danych.
-#' @param rok_absolwentow Liczba całkowita reprezentująca rok absolwentów do filtrowania.
-#' @param typ_szk Zmienna tekstowa opisująca typ szkoły
+#' @param wartosc_filtrujaca Wartość (np. nazwa województwa), której szukamy.
+#' @param typ_szk Zmienna tekstowa opisująca typ szkoły.
+#' @param rok_absolwentow Liczba całkowita reprezentująca rok absolwentów.
+#' @param typ Nazwa kolumny, po której filtrujemy. Domyślnie `WOJ_NAZWA`.
+#'   Podawana bez cudzysłowu.
 #' @return Ramka danych typu tibble w finalnym formacie do zasilania wykresów.
-#' @importFrom dplyr filter pull select mutate %>% if_else
+#' @importFrom dplyr filter pull select mutate %>% if_else starts_with
 #' @importFrom tidyr pivot_longer
 #' @importFrom stringr str_to_sentence
-#' @importFrom rlang .data
+#' @importFrom rlang .data enquo !!
+#' @importFrom tibble tibble
 #' @export
-dane_wyk_D1_plec <- function(pelna_finalna_ramka_wskaznikow,
-                             typ_szk, rok_absolwentow) {
+dane_wyk_D1_plec <- function(ramka_danych,
+                             wartosc_filtrujaca,
+                             typ_szk, rok_absolwentow,
+                             typ = WOJ_NAZWA) {
 
-  dane_wejsciowe <- pelna_finalna_ramka_wskaznikow %>%
+  dane_wejsciowe <- ramka_danych %>%
     filter(
-      .data$WOJ_NAZWA == "Polska",
+      if_all(all_of(typ), ~ . ==  wartosc_filtrujaca),
       .data$wskaznik == "D1",
       .data$kryterium == "sexf",
       .data$typ_szk2 == {{typ_szk}},
-      .data$rok_abs == rok_absolwentow
+      .data$rok_abs == {{rok_absolwentow}}
     ) %>%
     pull(.data$wynik) %>% `[[`(1)
 
@@ -63,27 +69,32 @@ dane_wyk_D1_plec <- function(pelna_finalna_ramka_wskaznikow,
 #' @title Przygotowanie danych do tabel
 #' @description Funkcja filtruje i przetwarza dane z pełnej ramki wskaźników,
 #'   aby przygotować je do generowania tabeli.
-#' @param pelna_finalna_ramka_wskaznikow Ramka danych zawierająca pełne wyniki wskaźników.
+#' @param ramka_danych Ramka danych zawierająca pełne wyniki wskaźników.
 #'   Oczekuje, że kolumna 'wynik' zawiera zagnieżdżone ramki danych.
-#' @param rok_absolwentow Liczba całkowita reprezentująca rok absolwentów do filtrowania.
-#' @param typ_szk Zmienna tekstowa opisująca typ szkoły
+#' @param wartosc_filtrujaca Wartość (np. nazwa województwa), której szukamy.
+#' @param typ_szk Zmienna tekstowa opisująca typ szkoły.
+#' @param rok_absolwentow Liczba całkowita reprezentująca rok absolwentów.
+#' @param typ Nazwa kolumny, po której filtrujemy. Domyślnie `WOJ_NAZWA`.
+#'   Podawana bez cudzysłowu.
 #' @return Ramka danych typu tibble w finalnym formacie do zasilania tabel.
 #' @importFrom dplyr filter pull select mutate %>% across rename rename_with matches
 #' @importFrom tidyselect starts_with where all_of
-#' @importFrom rlang .data
+#' @importFrom rlang .data enquo !!
 #' @importFrom stringr str_replace str_to_sentence
 #' @importFrom tibble tibble
 #' @export
-dane_tab_D1_plec <- function(pelna_finalna_ramka_wskaznikow,
-                             typ_szk, rok_absolwentow) {
+dane_tab_D1_plec <- function(ramka_danych,
+                             wartosc_filtrujaca,
+                             typ_szk, rok_absolwentow,
+                             typ = WOJ_NAZWA) {
 
-  dane_wejsciowe <- pelna_finalna_ramka_wskaznikow %>%
+  dane_wejsciowe <- ramka_danych %>%
     filter(
-      .data$WOJ_NAZWA == "Polska",
+      if_all(all_of(typ), ~ . ==  wartosc_filtrujaca),
       .data$wskaznik == "D1",
       .data$kryterium == "sexf",
       .data$typ_szk2 == {{typ_szk}},
-      .data$rok_abs == rok_absolwentow
+      .data$rok_abs == {{rok_absolwentow}}
     ) %>%
     pull(.data$wynik) %>% `[[`(1)
 
@@ -125,31 +136,42 @@ dane_tab_D1_plec <- function(pelna_finalna_ramka_wskaznikow,
 #'   aby przygotować je do generowania wykresu. Tworzy ramkę danych
 #'   z kolumnami `dyplom`, `nazwa_zaw`, oraz `pct` (jako odsetek) w formacie
 #'   będącym wejściem do funkcji wykresDyplomyZawod z pakietu LOSYkolory.
-#' @param pelna_finalna_ramka_wskaznikow Ramka danych zawierająca pełne wyniki wskaźników.
+#' @param ramka_danych Ramka danych zawierająca pełne wyniki wskaźników.
 #'   Oczekuje, że kolumna 'wynik' zawiera zagnieżdżone ramki danych.
-#' @param rok_absolwentow Liczba całkowita reprezentująca rok absolwentów do filtrowania.
-#' @param typ_szk Zmienna tekstowa opisująca typ szkoły
+#' @param wartosc_filtrujaca Wartość (np. nazwa województwa), której szukamy.
+#' @param typ_szk Zmienna tekstowa opisująca typ szkoły.
+#' @param rok_absolwentow Liczba całkowita reprezentująca rok absolwentów.
+#' @param typ Nazwa kolumny, po której filtrujemy. Domyślnie `WOJ_NAZWA`.
+#'   Podawana bez cudzysłowu.
 #' @return Ramka danych typu tibble w finalnym formacie do zasilania wykresów.
 #' @importFrom dplyr %>% filter pull select mutate slice starts_with where
 #' @importFrom tidyr pivot_longer
-#' @importFrom rlang .data
+#' @importFrom rlang .data enquo !!
 #' @importFrom stringr str_to_sentence
 #' @importFrom stats reorder
+#' @importFrom tibble tibble
 #' @export
-dane_wyk_D1_zaw <- function(pelna_finalna_ramka_wskaznikow,
-                            typ_szk, rok_absolwentow) {
+dane_wyk_D1_zaw <- function(ramka_danych,
+                            wartosc_filtrujaca,
+                            typ_szk, rok_absolwentow,
+                            typ = WOJ_NAZWA) {
 
-  dane_wejsciowe <- pelna_finalna_ramka_wskaznikow %>%
+  dane_wejsciowe <- ramka_danych %>%
     filter(
-      .data$WOJ_NAZWA == "Polska",
+      if_all(all_of(typ), ~ . ==  wartosc_filtrujaca),
       .data$wskaznik == "D1",
       .data$kryterium == "nazwa_zaw",
       .data$typ_szk2 == {{typ_szk}},
-      .data$rok_abs == rok_absolwentow
+      .data$rok_abs == {{rok_absolwentow}}
     ) %>%
     pull(.data$wynik) %>% `[[`(1)
 
+
   if (is.null(dane_wejsciowe) ||
+    colnames(dane_wejsciowe)[1] %in% "Uwaga" ||
+      nrow(dane_wejsciowe %>%
+           filter(nazwa_zaw != "OGÓŁEM",
+                  n_SUMA >= 10)) == 0||
       colnames(dane_wejsciowe)[1] %in% "Uwaga") {
     message("Brak danych wejściowych dla podanych kryteriów. Zwracam pustą ramkę danych.")
     return(tibble(
@@ -181,34 +203,40 @@ dane_wyk_D1_zaw <- function(pelna_finalna_ramka_wskaznikow,
 #' @title Przygotowanie danych do tabel
 #' @description Funkcja filtruje i przetwarza dane z pełnej ramki wskaźników,
 #'   aby przygotować je do generowania tabel.
-#' @param pelna_finalna_ramka_wskaznikow Ramka danych zawierająca pełne wyniki wskaźników.
+#' @param ramka_danych Ramka danych zawierająca pełne wyniki wskaźników.
 #'   Oczekuje, że kolumna 'wynik' zawiera zagnieżdżone ramki danych.
-#' @param typ_szk Zmienna tekstowa opisująca typ szkoły
-#' @param rok_absolwentow Liczba całkowita reprezentująca rok absolwentów do filtrowania.
-#' @param tylko_tabele parametr TRUE/FALSE przekazywany z głównej funkcji
-#'   generującej raport - jeśli FALSE to przycina tabele z zawodami do 10
-#'   najliczniejszych zawodów, jeśli TRUE to raport generuje tabele zawodów bez
-#'   przycinania
+#' @param wartosc_filtrujaca Wartość (np. nazwa województwa), której szukamy.
+#' @param typ_szk Zmienna tekstowa opisująca typ szkoły.
+#' @param rok_absolwentow Liczba całkowita reprezentująca rok absolwentów.
+#' @param typ Nazwa kolumny, po której filtrujemy. Domyślnie `WOJ_NAZWA`.
+#'   Podawana bez cudzysłowu.
 #' @return Ramka danych typu tibble w finalnym formacie do zasilania tabel.
 #' @importFrom dplyr %>% filter pull select mutate across where rename rename_with
 #' @importFrom tidyselect starts_with matches
-#' @importFrom rlang .data
+#' @importFrom rlang .data enquo !!
 #' @importFrom stringr str_replace str_to_upper str_sub str_c
+#' @importFrom tibble tibble
 #' @export
-dane_tab_D1_zaw <- function(pelna_finalna_ramka_wskaznikow,
-                            typ_szk, rok_absolwentow, tylko_tabele) {
+dane_tab_D1_zaw <- function(ramka_danych,
+                            wartosc_filtrujaca,
+                            typ_szk, rok_absolwentow,
+                            typ = WOJ_NAZWA) {
 
-  dane_wejsciowe <- pelna_finalna_ramka_wskaznikow %>%
+  dane_wejsciowe <- ramka_danych %>%
     filter(
-      .data$WOJ_NAZWA == "Polska",
+      if_all(all_of(typ), ~ . ==  wartosc_filtrujaca),
       .data$wskaznik == "D1",
       .data$kryterium == "nazwa_zaw",
       .data$typ_szk2 == {{typ_szk}},
-      .data$rok_abs == rok_absolwentow
+      .data$rok_abs == {{rok_absolwentow}}
     ) %>%
     pull(.data$wynik) %>% `[[`(1)
 
   if (is.null(dane_wejsciowe) ||
+      colnames(dane_wejsciowe)[1] %in% "Uwaga"  ||
+      nrow(dane_wejsciowe %>%
+           filter(nazwa_zaw != "OGÓŁEM",
+                  n_SUMA >= 10)) == 0 ||
       colnames(dane_wejsciowe)[1] %in% "Uwaga") {
     message("Brak danych wejściowych dla podanych kryteriów. Zwracam pustą ramkę danych.")
     return(tibble(
@@ -216,24 +244,7 @@ dane_tab_D1_zaw <- function(pelna_finalna_ramka_wskaznikow,
     ))
   }
 
-  if(tylko_tabele == FALSE) {
-    dane_wyjsciowe <- dane_wejsciowe  %>%
-      filter(nazwa_zaw != "OGÓŁEM") %>%
-      slice(1:10) %>%
-      select(nazwa_zaw, n_SUMA, starts_with("pct_"), -pct_SUMA) %>%
-      select(where(~ is.factor(.x) || sum(.x) !=0)) %>%
-      mutate(
-        across(where(is.numeric), ~  round(.,digits = 2))) %>%
-      rename(Zawód = nazwa_zaw,
-             N = n_SUMA)  %>%
-      rename_with(
-        ~ str_c("pct_",
-                str_to_upper(str_sub(., start = 5, end = 5)),
-                str_sub(., start = 6, end = -1)
-        ), .cols = starts_with("pct_")
-      ) %>%
-      rename_with(~ str_replace(., "^pct_", "procent_"), matches("^pct_"))
-  } else {
+
     dane_wyjsciowe <- dane_wejsciowe  %>%
       filter(nazwa_zaw != "OGÓŁEM",
              n_SUMA >= 10) %>%
@@ -249,7 +260,7 @@ dane_tab_D1_zaw <- function(pelna_finalna_ramka_wskaznikow,
                 str_sub(., start = 6, end = -1)
         ), .cols = starts_with("pct_")
       ) %>%
-      rename_with(~ str_replace(., "^pct_", "procent_"), matches("^pct_"))
-  }
+      rename_with(~ str_replace(., "^pct_(.*)", "\\1 (%)"), matches("^pct_"))
+
   return(dane_wyjsciowe)
 }

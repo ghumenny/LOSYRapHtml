@@ -1,0 +1,273 @@
+<br> <br> <br>
+
+```{r '{{typ_szk}},K1setup', echo=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE, results='asis', 
+                      fig.width = 10, fig.height = 10, fig.path = "fig/", 
+                      out.width = "100%")
+
+typ_rap <- "{{typ_rapo}}"
+nazwa_jednostki <- "{{nazwa_jednostki}}"
+typ_szk <-  "{{typ_szk}}"
+ewaluowana_edycja <- {{edycja}}
+ewaluowany_rok_abs <- {{rok_abs}}
+ewaluowany_rok <- {{rok}}
+if (ewaluowana_edycja == ewaluowany_rok_abs + 2) {
+  ewaluowany_kolejny_rok = ewaluowany_rok_abs + 1
+}
+
+
+set_flextable_defaults(
+#  font.family = "Cambria",
+  font.size = 10,
+  padding = 2,
+  border.color = "#CCCCCC",
+  line_spacing = 1.08,
+  digits = 2,
+  decimal.mark = ",",
+  big.mark = " ",
+  na_str = "<na>"
+)
+```
+
+```{r '{{typ_szk}},K1dfh', echo=FALSE, warning=FALSE, message=FALSE}
+if (typ_szk %in% szkoly_z_zawodem)  {
+  dfh <- oblicz_wysokosc_wykresu_zawody(
+  ramka_danych = ramka_danych,
+  wartosc_filtrujaca = nazwa_jednostki,
+  typ_szkoly = typ_szk,
+  rok_absolwentow = ewaluowany_rok_abs,
+  rok = ewaluowany_rok,
+  typ = typ_rap 
+)
+} else {dfh <- 4}
+```
+
+
+```{r '{{typ_szk}},k1w1', fig.height = 4, fig.width=10}
+if (typ_szk %in% szkoly_branzowe &&
+    tylko_tabele == FALSE) {
+  cat0("### Kontynuowanie nauki - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r.  {-} \n\n")
+}
+if (typ_szk %ni% szkoly_branzowe) {
+  cat0("## Kontynuowanie nauki - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r.  {-} \n\n")
+}
+
+if (tylko_tabele == FALSE &&
+    typ_szk %ni% "Szkoła specjalna przysposabiająca do pracy") {
+  cat0("Wykres ", wyk_num(), ": Kontynuowanie nauki w grudniu ", ewaluowany_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " - ogółem i w podziale na płeć\n\n")
+  
+  wykresKontynuacjeTypSzkPlec |> # podmiana danych
+    zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
+    zmien_prog_pokazywania_etykiet(hideBelow = 0.04) |> # zmiana progu ukrywania etykiet
+    zmien_rok_w_podpisie(ewaluowana_edycja) |> # zmiana roku w podpisie
+    podmien_dane_wykresu(dane_wyk_K1_plec(ramka_danych, nazwa_jednostki, 
+                                          typ_szk, ewaluowany_rok_abs, 
+                                          ewaluowany_rok, 
+                                          typ = typ_rap)) 
+}
+```
+
+```{r '{{typ_szk}},k1t1'}
+cat0("Tabela ", tab_num(), ": Kontynuowanie nauki w grudniu ", ewaluowany_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " - ogółem i w podziale na płeć\n\n")
+
+if (typ_szk %ni% "Szkoła specjalna przysposabiająca do pracy") {  
+  dane_tab_K1_plec(ramka_danych, nazwa_jednostki, 
+                   typ_szk, ewaluowany_rok_abs, ewaluowany_rok, 
+                   typ = typ_rap) %>%
+    gentab_tab_flex(ewaluowana_edycja)
+}
+```
+
+```{r '{{typ_szk}},k1w2', fig.height = 4, fig.width=10}
+if (ewaluowana_edycja == (ewaluowany_rok_abs + 2) &&
+    tylko_tabele == FALSE &&
+    typ_szk %ni% "Szkoła specjalna przysposabiająca do pracy") {
+  cat0("Wykres ", wyk_num(), ": Kontynuowanie nauki w grudniu ", ewaluowany_kolejny_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " - ogółem i w podziale na płeć\n\n")
+  
+  wykresKontynuacjeTypSzkPlec |> # podmiana danych
+    zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
+    zmien_prog_pokazywania_etykiet(hideBelow = 0.04) |> # zmiana progu ukrywania etykiet
+    zmien_rok_w_podpisie(ewaluowana_edycja) |> # zmiana roku w podpisie
+    podmien_dane_wykresu(dane_wyk_K1_plec(ramka_danych, nazwa_jednostki, 
+                                          typ_szk, ewaluowany_rok_abs, 
+                                          ewaluowany_kolejny_rok, 
+                                          typ = typ_rap)) 
+}
+```
+
+```{r '{{typ_szk}},k1t2'}
+if (ewaluowana_edycja == (ewaluowany_rok_abs + 2) &&
+    typ_szk %ni% "Szkoła specjalna przysposabiająca do pracy") {
+  cat0("Tabela ", tab_num(), ": Kontynuowanie nauki w grudniu ", ewaluowany_kolejny_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " - ogółem i w podziale na płeć\n\n")
+  
+  dane_tab_K1_plec(ramka_danych, nazwa_jednostki, 
+                   typ_szk, ewaluowany_rok_abs, ewaluowany_kolejny_rok, 
+                   typ = typ_rap) %>%
+    gentab_tab_flex(ewaluowana_edycja)
+}
+```
+
+
+```{r  '{{typ_szk}},k1w3', fig.height = dfh}
+if (typ_szk %in% szkoly_z_zawodem &&
+    tylko_tabele == FALSE) {
+  cat0("Wykres ", wyk_num(), ": Kontynuowanie nauki w grudniu ", ewaluowany_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " - w podziale na zawody o największej liczbie absolwentów\n\n")
+  
+  wykresKontynuacjeTypSzkZawod |> # podmiana danych
+    zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
+    zmien_prog_pokazywania_etykiet(hideBelow = 0.04) |> # zmiana progu ukrywania etykiet
+    zmien_rok_w_podpisie(ewaluowana_edycja) |> # zmiana roku w podpisie
+    podmien_dane_wykresu(dane_wyk_K1_zaw(ramka_danych, nazwa_jednostki, 
+                                         typ_szk, ewaluowany_rok_abs, 
+                                         ewaluowany_rok, 
+                                         typ = typ_rap)) 
+}
+
+
+```
+
+```{r '{{typ_szk}},k1t3'}
+if (typ_szk %in% szkoly_z_zawodem) {
+  cat0("Tabela ", tab_num(), ": Kontynuowanie nauki w grudniu ", ewaluowany_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " - w podziale na zawody o największej liczbie absolwentów\n\n")
+  
+  dane_tab_K1_zaw(ramka_danych, nazwa_jednostki, 
+                  typ_szk, ewaluowany_rok_abs, ewaluowany_rok, 
+                  typ = typ_rap) %>%
+    gentab_tab_dt(ewaluowana_edycja)
+}  
+```
+
+```{r  '{{typ_szk}},k1w4', fig.height = dfh}
+if (ewaluowana_edycja == (ewaluowany_rok_abs + 2) &&
+    typ_szk %in% szkoly_z_zawodem &&
+    tylko_tabele == FALSE) {
+  cat0("Wykres ", wyk_num(), ": Kontynuowanie nauki w grudniu ", ewaluowany_kolejny_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " - w podziale na zawody o największej liczbie absolwentów\n\n")
+  
+  wykresKontynuacjeTypSzkZawod |> # podmiana danych
+    zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
+    zmien_prog_pokazywania_etykiet(hideBelow = 0.04) |> # zmiana progu ukrywania etykiet
+    zmien_rok_w_podpisie(ewaluowana_edycja) |> # zmiana roku w podpisie
+    podmien_dane_wykresu(dane_wyk_K1_zaw(ramka_danych, nazwa_jednostki, 
+                                         typ_szk, ewaluowany_rok_abs, 
+                                         ewaluowany_kolejny_rok, 
+                                         typ = typ_rap)) 
+}
+```
+
+```{r '{{typ_szk}},k1t4'}
+if (ewaluowana_edycja == (ewaluowany_rok_abs + 2) &&
+    typ_szk %in% szkoly_z_zawodem) {
+  cat0("Tabela ", tab_num(), ": Kontynuowanie nauki w grudniu ", ewaluowany_kolejny_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " - w podziale na zawody o największej liczbie absolwentów\n\n")
+  
+  dane_tab_K1_zaw(ramka_danych, nazwa_jednostki, 
+                  typ_szk, ewaluowany_rok_abs,ewaluowany_kolejny_rok, 
+                  typ = typ_rap) %>%
+    gentab_tab_dt(ewaluowana_edycja)
+}
+```
+
+
+```{r '{{typ_szk}},k2w1', fig.height = 10, fig.width=10}
+if (tylko_tabele == FALSE &&
+    typ_szk %in% szkoly_pod_studia) {
+  cat0("Wykres ", wyk_num(), ": Dziedziny nauki, w których w grudniu ", ewaluowany_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " podjęli studia - ogółem i w podziale na płeć\n\n")
+  
+  wykresKontynuacjeDziedzinyPlec |> # podmiana danych
+    zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
+    zmien_prog_pokazywania_etykiet(hideBelow = 0.04) |> # zmiana progu ukrywania etykiet
+    zmien_rok_w_podpisie(ewaluowana_edycja) |> # zmiana roku w podpisie
+    podmien_dane_wykresu(dane_wyk_K2dzi_plec(ramka_danych, nazwa_jednostki, 
+                                             typ_szk, ewaluowany_rok_abs, 
+                                             typ = typ_rap)) 
+  }
+```
+
+
+```{r '{{typ_szk}},k2t1'}
+if (typ_szk %in% szkoly_pod_studia) {
+  cat0("Tabela ", tab_num(), ": Dziedziny nauki, w których w grudniu ", ewaluowany_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki),  " podjęli studia - ogółem i w podziale na płeć\n\n")
+  
+  if (colnames(dane_tab_K2dzi_plec(ramka_danych, nazwa_jednostki,  
+                                   typ_szk, ewaluowany_rok_abs, 
+                                   typ = typ_rap))[1] %in% "Uwaga") {
+    message("Brak możliwość prezentacji wyników - liczba absolwentów spełniających kryteria mniejsza niż 10 osób.")
+  } else {  
+    dane_tab_K2dzi_plec(ramka_danych, nazwa_jednostki, 
+                        typ_szk, ewaluowany_rok_abs, 
+                        typ = typ_rap) %>%
+      gentab_tab_flex(ewaluowana_edycja)
+  }
+}
+```
+
+
+```{r '{{typ_szk}},k2t2'}
+if (typ_szk %in% szkoly_z_zawodem_pod_studia) {
+  cat0("Tabela ", tab_num(), ": Dziedziny nauki, w których w grudniu ", ewaluowany_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " podjęli studia - w podziale na zawody\n\n")
+  
+  if (colnames(dane_tab_K2dzi_zaw(ramka_danych, nazwa_jednostki, 
+                                  typ_szk, ewaluowany_rok_abs, 
+                                  typ = typ_rap))[1] %in% "Uwaga") {
+    message("Brak możliwość prezentacji wyników - liczba absolwentów spełniających kryteria mniejsza niż 10 osób.")
+  } else {   
+    dane_tab_K2dzi_zaw(ramka_danych, nazwa_jednostki, 
+                       typ_szk, ewaluowany_rok_abs, 
+                       typ = typ_rap) %>%
+      gentab_tab_dt(ewaluowana_edycja)
+  }
+}
+```
+
+
+
+```{r '{{typ_szk}},k2w3', fig.height = 10, fig.width=10}
+if (tylko_tabele == FALSE &&
+    typ_szk %in% szkoly_pod_studia) {
+  cat0("Wykres ", wyk_num(), ": Dyscypliny nauki, w których w grudniu ", ewaluowany_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " podjęli studia - ogółem i w podziale na płeć\n\n")
+  
+  wykresKontynuacjeDyscyplinyPlec |> # podmiana danych
+    zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
+    zmien_prog_pokazywania_etykiet(hideBelow = 0.04) |> # zmiana progu ukrywania etykiet
+    zmien_rok_w_podpisie(ewaluowana_edycja) |> # zmiana roku w podpisie
+    podmien_dane_wykresu(dane_wyk_K2dys_plec(ramka_danych, nazwa_jednostki,  
+                                             typ_szk, ewaluowany_rok_abs, 
+                                             typ = typ_rap)) 
+}
+```
+
+
+```{r '{{typ_szk}},k2t3'}
+if (typ_szk %in% szkoly_pod_studia) {
+  cat0("Tabela ", tab_num(), ": Dyscypliny nauki, w których w grudniu ", ewaluowany_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " podjęli studia - ogółem i w podziale na płeć\n\n")
+  
+  if (colnames(dane_tab_K2dys_plec(ramka_danych, nazwa_jednostki,  
+                                   typ_szk, ewaluowany_rok_abs, 
+                                   typ = typ_rap))[1] %in% "Uwaga") {
+    message("Brak możliwość prezentacji wyników - liczba absolwentów spełniających kryteria mniejsza niż 10 osób.")
+  } else {   
+    dane_tab_K2dys_plec(ramka_danych, nazwa_jednostki, 
+                        typ_szk, ewaluowany_rok_abs, 
+                        typ = typ_rap) %>%
+      gentab_tab_flex(ewaluowana_edycja)
+  }
+}
+```
+
+
+```{r '{{typ_szk}},k2t4'}
+if (typ_szk %in% szkoly_z_zawodem_pod_studia) {
+  cat0("Tabela ", tab_num(), ": Dyscypliny nauki, w których w grudniu ", ewaluowany_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " podjęli studia - w podziale na zawody\n\n")
+  
+  if (colnames(dane_tab_K2dys_zaw(ramka_danych, nazwa_jednostki,  
+                                  typ_szk, ewaluowany_rok_abs, 
+                                  typ = typ_rap))[1] %in% "Uwaga") {
+    message("Brak możliwość prezentacji wyników - liczba absolwentów spełniających kryteria mniejsza niż 10 osób.")
+  } else {    
+    dane_tab_K2dys_zaw(ramka_danych, nazwa_jednostki,  
+                       typ_szk, ewaluowany_rok_abs, 
+                       typ = typ_rap) %>%
+      gentab_K2dys_zaw(ewaluowana_edycja)
+  }
+}
+```
+

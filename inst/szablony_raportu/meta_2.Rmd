@@ -1,0 +1,132 @@
+
+<br> <br> <br>
+
+```{r '{{nazwa_jednostki}}.meta.setup',  echo=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE, results='asis', 
+                      fig.width = 10, fig.height = 10, fig.path = "fig/", 
+                      out.width = "100%")
+
+typ_rap <- "{{typ_rapo}}"
+nazwa_jednostki <- "{{nazwa_jednostki}}"
+typ_szk <-  "{{typ_szk}}"
+ewaluowana_edycja <- {{edycja}}
+ewaluowany_rok_abs <- {{rok_abs}}
+ewaluowany_rok <- {{rok}}
+if (ewaluowana_edycja == ewaluowany_rok_abs + 2) {
+  ewaluowany_kolejny_rok = ewaluowany_rok_abs + 1
+}
+
+
+set_flextable_defaults(
+#  font.family = "Cambria",
+  font.size = 10,
+  padding = 2,
+  border.color = "#CCCCCC",
+  line_spacing = 1.08,
+  digits = 2,
+  decimal.mark = ",",
+  big.mark = " ",
+  na_str = "<na>"
+)
+```
+
+# Charakterystyka absolwentów objętych monitoringiem z `r dopelniacz(nazwa_jednostki)`
+
+## Absolwenci poszczególnych typów szkół z `r ewaluowany_rok_abs` r. 
+
+
+```{r '{{nazwa_jednostki}}.meta.t1', results='asis'}
+
+cat0("Tabela ", tab_num(), ": Struktura populacji absolwentów z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki),", objętych monitoringiem według typów szkół\n\n")    
+
+tabelka <- dane_tab_meta_typsz_og(ramka_danych, nazwa_jednostki,
+                       rok_absolwentow = ewaluowany_rok_abs,
+                       typ = typ_rap) %>% 
+  gentab_typsz_flext_og(ewaluowana_edycja)
+tabelka
+```
+
+```{r '{{nazwa_jednostki}}.meta.w1', fig.width=10, fig.height=4}
+if (tylko_tabele == FALSE) {
+cat0("Wykres ", wyk_num(), ": Struktura populacji absolwentów z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki),", objętych monitoringiem według typów szkół\n")
+
+  wykresTypySzkol |> 
+    zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
+    zmien_prog_pokazywania_etykiet(hideBelow = 0.04) |> # zmiana progu ukrywania etykiet
+    zmien_rok_w_podpisie(ewaluowana_edycja) |> # zmiana roku w podpisie
+    podmien_dane_wykresu(dane_wyk_meta_typsz_og(ramka_danych, nazwa_jednostki,
+                                                rok_absolwentow = ewaluowany_rok_abs,
+                                                typ = typ_rap))  |> 
+    print()
+}
+
+```
+
+```{r '{{nazwa_jednostki}}.meta.t2'}
+cat0("## Absolwenci poszczególnych typów szkół z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki)," – w podziale na płeć\n\n")
+
+cat0("Tabela ", tab_num(), ": Struktura absolwentów objętych monitoringiem według typów szkół i płci z roku ", ewaluowany_rok_abs, "\n\n")
+
+tabelka <- dane_tab_meta_typsz_plec(ramka_danych, nazwa_jednostki,
+                                    ewaluowany_rok_abs,
+                                    typ = typ_rap) %>% 
+  gentab_tab_flex(ewaluowana_edycja)
+tabelka
+```
+
+```{r '{{nazwa_jednostki}}.meta.w2', fig.width=10, fig.height=4}
+if (tylko_tabele == FALSE) {
+  cat0("Wykres ", wyk_num(), ": Struktura absolwentów objętych monitoringiem według typów szkół i płci z roku ", ewaluowany_rok_abs, "\n\n")    
+  
+  wykresPlec|> 
+    zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
+    zmien_prog_pokazywania_etykiet(hideBelow = 0.04) |> # zmiana progu ukrywania etykiet
+    zmien_rok_w_podpisie(ewaluowana_edycja) |> # zmiana roku w podpisie
+    podmien_dane_wykresu(dane_wyk_meta_typsz_plec(ramka_danych, nazwa_jednostki,
+                                                  ewaluowany_rok_abs,
+                                                  typ = typ_rap))  |>   # zmiana roku w podpisie
+    print()
+}
+```
+
+```{r '{{nazwa_jednostki}}.meta.t4'}
+cat0("## Absolwenci poszczególnych typów szkół w ujęciu krajowym w podziale na zawody\n\n")
+
+cat0("Tabela ", tab_num(), ": Zawody o największej liczbie absolwentów objętych monitoringiem według typów szkół z roku ", ewaluowany_rok_abs, "\n\n")
+  
+tabelka <- dane_wyk_meta_typsz_zaw(ramka_danych, nazwa_jednostki,
+                                    ewaluowany_rok_abs,
+                                    typ = typ_rap) %>% 
+  gentab_typsz_flext_zaw(ewaluowana_edycja)
+tabelka
+```
+
+```{r '{{nazwa_jednostki}}.meta.w3', fig.width=10, fig.height=10}
+if (tylko_tabele == FALSE && typ_rap == "WOJ_NAZWA") {
+cat0("## Migracje absolwentów z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " w grudniu ", ewaluowany_rok, " roku. \n")
+
+cat0("Wykres ", wyk_num(), ": Migracje absolwentów z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " w grudniu ", ewaluowany_rok, " roku. \n")    
+(wykresMigracjeWoj %+% 
+    zlacz_z_mapa(dane_wyk_meta_migracje(ramka_danych, nazwa_jednostki,
+                                        ewaluowany_rok_abs, 
+                                        rok = ewaluowany_rok))) |> # podmiana danych
+  zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
+  zmien_rok_w_podpisie(ewaluowana_edycja) %>%  # zmiana roku w podpisie
+  print()
+}
+```
+
+```{r '{{nazwa_jednostki}}.meta.w4', fig.width=10, fig.height=10}
+if (ewaluowana_edycja == (ewaluowany_rok_abs + 2) &&
+    tylko_tabele == FALSE && typ_rap == "WOJ_NAZWA") {
+cat0("Wykres ", wyk_num(), ": Migracje absolwentów z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " w grudniu ", ewaluowany_kolejny_rok, " roku. \n")    
+  (wykresMigracjeWoj %+% 
+      zlacz_z_mapa(dane_wyk_meta_migracje(ramka_danych, nazwa_jednostki,
+                                          ewaluowany_rok_abs, 
+                                          rok = ewaluowany_kolejny_rok))) |> # podmiana danych
+    zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
+    zmien_rok_w_podpisie(ewaluowana_edycja) %>%  # zmiana roku w podpisie
+    print()
+}
+```
+**W dalszej części raportu wyniki są analizowane wyłącznie zbiorczo i przedstawiane dla grup liczących co najmniej 10 osób.**

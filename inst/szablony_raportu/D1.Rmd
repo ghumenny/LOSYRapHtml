@@ -6,8 +6,9 @@
 
 ```{r '{{typ_szk}},D1setup', echo=FALSE, warning=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE, results='asis', 
- fig.width = 10, fig.height = 10, fig.path = "figPOL/", 
+ fig.width = 10, fig.height = 10, fig.path = "fig/", 
  out.width = "100%")
+nazwa_woj <- "{{woj_nazwa}}"
 typ_szk <-  "{{typ_szk}}"
 ewaluowana_edycja <- {{edycja}}
 ewaluowany_rok_abs <- {{rok_abs}}
@@ -46,10 +47,10 @@ cat0("## Uzyskiwanie dyplomów potwierdzających kwalifikacje zawodowe i świade
 
 if (tylko_tabele == FALSE &&
     typ_szk %in% szkoly_z_zawodem) {
-cat0("Wykres ", wyk_num(), ": Uzyskiwanie dyplomów potwierdzających kwalifikacje zawodowe", if(typ_szk %in% szkoly_branzowe) {", świadectw czeladniczych"}, " i świadectw potwierdzających kwalifikację w zawodzie - absolwenci ",  dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. - ogółem i w podziale na płeć\n\n")
+cat0("Wykres ", wyk_num(), ": Uzyskiwanie dyplomów potwierdzających kwalifikacje zawodowe", if(typ_szk %in% szkoly_branzowe) {", świadectw czeladniczych"}, " i świadectw potwierdzających kwalifikację w zawodzie - absolwenci ",  dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. w województwie ", miejscownik(nazwa_woj), " - ogółem i w podziale na płeć\n\n")
     
 (wykresDyplomyPlec %+% 
-    dane_wyk_D1_plec(pelna_finalna_ramka_wskaznikow, 
+    dane_wyk_D1_plec(pelna_finalna_ramka_wskaznikow, nazwa_woj, 
                      typ_szk, ewaluowany_rok_abs)) |> # podmiana danych
   zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
   zmien_prog_pokazywania_etykiet(hideBelow = 0.04) |> # zmiana progu ukrywania etykiet
@@ -59,11 +60,11 @@ cat0("Wykres ", wyk_num(), ": Uzyskiwanie dyplomów potwierdzających kwalifikac
 
 ```{r '{{typ_szk}},d1t1'}
 if (typ_szk %in% szkoly_z_zawodem) {
-  cat0("Tabela ", tab_num(), ": Uzyskiwanie dyplomów potwierdzających kwalifikacje zawodowe", if(typ_szk %in% szkoly_branzowe) {", świadectw czeladniczych"}, " i świadectw potwierdzających kwalifikację w zawodzie - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. - ogółem i w podziale na płeć\n\n")
+  cat0("Tabela ", tab_num(), ": Uzyskiwanie dyplomów potwierdzających kwalifikacje zawodowe", if(typ_szk %in% szkoly_branzowe) {", świadectw czeladniczych"}, " i świadectw potwierdzających kwalifikację w zawodzie - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. w województwie ", miejscownik(nazwa_woj), " - ogółem i w podziale na płeć\n\n")
   
-dane_tab_D1_plec(pelna_finalna_ramka_wskaznikow, 
+dane_tab_D1_plec(pelna_finalna_ramka_wskaznikow, nazwa_woj, 
                  typ_szk, ewaluowany_rok_abs) %>% 
-  gentab_tab_D(ewaluowana_edycja)
+  gentab_tab_flex(ewaluowana_edycja)
 }
 ```
 
@@ -71,23 +72,30 @@ dane_tab_D1_plec(pelna_finalna_ramka_wskaznikow,
 ```{r  '{{typ_szk}},d1w2'}
 if (tylko_tabele == FALSE &&
     typ_szk %in% szkoly_z_zawodem) {
-cat0("Wykres ", wyk_num(), ": Uzyskiwanie dyplomów potwierdzających kwalifikacje zawodowe", if(typ_szk %in% szkoly_branzowe) {", świadectw czeladniczych"}, " i świadectw potwierdzających kwalifikację w zawodzie - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. - w podziale na zawody o największej liczbie absolwentów\n\n")
-    
+cat0("Wykres ", wyk_num(), ": Uzyskiwanie dyplomów potwierdzających kwalifikacje zawodowe", if(typ_szk %in% szkoly_branzowe) {", świadectw czeladniczych"}, " i świadectw potwierdzających kwalifikację w zawodzie - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. w województwie ", miejscownik(nazwa_woj), " - w podziale na zawody o największej liczbie absolwentów\n\n")
+  
+    if (colnames(dane_wyk_D1_zaw(pelna_finalna_ramka_wskaznikow, nazwa_woj, 
+                    typ_szk, ewaluowany_rok_abs))[1] %in% "Uwaga") {
+    message("Brak możliwość prezentacji wyników - liczba absolwentów spełniających kryteria mniejsza niż 10 osób.")
+  } else {     
 (wykresDyplomyZawod %+%
-    dane_wyk_D1_zaw(pelna_finalna_ramka_wskaznikow, 
+    dane_wyk_D1_zaw(pelna_finalna_ramka_wskaznikow, nazwa_woj, 
                     typ_szk, ewaluowany_rok_abs) ) |> # podmiana danych
   zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
   zmien_prog_pokazywania_etykiet(hideBelow = 0.04) |> # zmiana progu ukrywania etykiet
   zmien_rok_w_podpisie(ewaluowana_edycja)
+  }
 }
 ```
 
 ```{r '{{typ_szk}},d1t2'}
 if (typ_szk %in% szkoly_z_zawodem) {
-cat0("Tabela ", tab_num(), ": Uzyskiwanie dyplomów potwierdzających kwalifikacje zawodowe", if(typ_szk %in% szkoly_branzowe) {", świadectw czeladniczych"}, " i świadectw potwierdzających kwalifikację w zawodzie - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. - w podziale na zawody o największej liczbie absolwentów\n\n")
-dane_tab_D1_zaw(pelna_finalna_ramka_wskaznikow, 
+cat0("Tabela ", tab_num(), ": Uzyskiwanie dyplomów potwierdzających kwalifikacje zawodowe", if(typ_szk %in% szkoly_branzowe) {", świadectw czeladniczych"}, " i świadectw potwierdzających kwalifikację w zawodzie - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. w województwie ", miejscownik(nazwa_woj), " - w podziale na zawody o największej liczbie absolwentów\n\n")
+  
+ 
+dane_tab_D1_zaw(pelna_finalna_ramka_wskaznikow, nazwa_woj, 
                 typ_szk, ewaluowany_rok_abs, tylko_tabele) %>%
-  gentab_tab_D(ewaluowana_edycja)
+  gentab_tab_dt(ewaluowana_edycja)
 }
 ```
 
