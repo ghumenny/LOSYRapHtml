@@ -186,7 +186,7 @@ dane_wyk_D2_zaw <- function(ramka_danych,
 
   dane_wyjsciowe <- dane_wejsciowe  %>%
     filter(nazwa_zaw != "OGÓŁEM",
-           n_SUMA > 10) %>%
+           n_SUMA >= 10) %>%
     slice(1:10) %>%
     select(nazwa_zaw, n_SUMA, starts_with("pct_"), -pct_SUMA) %>%
     pivot_longer(!c(nazwa_zaw, n_SUMA), names_to = "dyplom", values_to = "pct",

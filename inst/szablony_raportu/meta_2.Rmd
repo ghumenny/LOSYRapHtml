@@ -90,7 +90,7 @@ if (tylko_tabele == FALSE) {
 ```
 
 ```{r '{{nazwa_jednostki}}.meta.t4'}
-cat0("## Absolwenci poszczególnych typów szkół w ujęciu krajowym w podziale na zawody\n\n")
+cat0("## Absolwenci poszczególnych typów szkół w ujęciu ",if(typ_rap == "WOJ_NAZWA") {"wojewódzkim"} else { "branżowym"}," w podziale na zawody\n\n")
 
 cat0("Tabela ", tab_num(), ": Zawody o największej liczbie absolwentów objętych monitoringiem według typów szkół z roku ", ewaluowany_rok_abs, "\n\n")
   

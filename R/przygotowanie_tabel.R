@@ -56,8 +56,14 @@ gentab_typsz_flext_og <- function(dane_do_tabeli, edycja) {
 gentab_typsz_flext_zaw <- function(dane_do_tabeli, edycja) {
 
   if (is.null(dane_do_tabeli) || colnames(dane_do_tabeli)[1] %in% "Uwaga") {
-    message("Nie udostępnia się zagregowanych wyników monitoringu karier absolwentów obejmujących mniej niż 10 osób.")
-  } else {
+    komunikat <- if (is.null(dane_do_tabeli)) {
+      "Nie udostępnia się zagregowanych wyników monitoringu karier absolwentów obejmujących mniej niż 10 osób."
+    } else {
+      dane_do_tabeli$Uwaga[1]
+    }
+    cat(paste0("\n\n", komunikat, "\n\n"))
+    return(invisible(NULL))
+  }
 
     num_cols <- ncol(dane_do_tabeli)
     x <- num_cols / 3
@@ -79,7 +85,7 @@ gentab_typsz_flext_zaw <- function(dane_do_tabeli, edycja) {
 
     return(tabela_flextable)
   }
-}
+
 
 #' @title Generowanie tabeli statusów w formacie flextable
 #' @description Funkcja przyjmuje przygotowane dane ze wskaźnikiem statusowym i
@@ -134,8 +140,13 @@ gentab_tab_flex <- function(dane_do_tabeli, edycja) {
 gentab_K2dys_zaw <- function(dane_do_tabeli, edycja) {
 
   if (is.null(dane_do_tabeli) || nrow(dane_do_tabeli)[1] == 0) {
-    message("Nie udostępnia się zagregowanych wyników monitoringu karier absolwentów obejmujących mniej niż 10 osób.")
-    cat("Nie udostępnia się zagregowanych wyników monitoringu karier absolwentów obejmujących mniej niż 10 osób.")
+    komunikat <- if (is.null(dane_do_tabeli)) {
+      "Nie udostępnia się zagregowanych wyników monitoringu karier absolwentów obejmujących mniej niż 10 osób."
+    } else {
+      dane_do_tabeli$Uwaga[1]
+    }
+    cat(paste0("\n\n", komunikat, "\n\n"))
+    return(invisible(NULL))
   }
 
   num_cols <- ncol(dane_do_tabeli)
@@ -174,10 +185,17 @@ gentab_K2dys_zaw <- function(dane_do_tabeli, edycja) {
 gentab_tab_dt <- function(dane_do_tabeli, edycja) {
 
   # Sprawdzenie, czy dane wejściowe nie są puste
-  if (is.null(dane_do_tabeli) || colnames(dane_do_tabeli)[1] %in% "Uwaga") {
-    message("Nie udostępnia się zagregowanych wyników monitoringu karier absolwentów obejmujących mniej niż 10 osób.")
-    cat("Nie udostępnia się zagregowanych wyników monitoringu karier absolwentów obejmujących mniej niż 10 osób.")
+  if (is.null(dane_do_tabeli) ||
+      colnames(dane_do_tabeli)[1] %in% "Uwaga") {
+    komunikat <- if (is.null(dane_do_tabeli)) {
+      "Nie udostępnia się zagregowanych wyników monitoringu karier absolwentów obejmujących mniej niż 10 osób."
+    } else {
+      dane_do_tabeli$Uwaga[1]
+    }
+    cat(paste0("\n\n", komunikat, "\n\n"))
+    return(invisible(NULL))
   }
+
 
   # Tworzenie datatable i stosowanie formatowania
   tabela_flextable <- dane_do_tabeli %>%

@@ -129,7 +129,7 @@ dane_tab_K1_plec <- function(ramka_danych,
   if (n_m < 10 && n_k < 10 && n_o < 10) {
     message("Brak danych wejściowych dla podanych kryteriów. Zwracam pustą ramkę danych.")
     return(tibble(
-      Uwaga = "Mniej niż 10 osolwentów kontynuujących naukę ogółem."
+      Uwaga = "Mniej niż 10 absolwentów kontynuujących naukę ogółem."
     ))
   }
 
