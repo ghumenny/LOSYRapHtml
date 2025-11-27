@@ -238,7 +238,7 @@ if (tylko_tabele == FALSE &&
 
 ```{r '{{typ_szk}},k2t3'}
 if (typ_szk %in% szkoly_pod_studia) {
-  cat0("Tabela ", tab_num(), ": Dyscypliny nauki, w których w grudniu ", ewaluowany_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " podjęli studia - ogółem i w podziale na płeć\n\n")
+  cat0("Tabela ", tab_num(), ": Dyscypliny nauki, w których w grudniu ", ewaluowany_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " podjęli studia - 10 najpopularniejszych ogółem i w podziale na płeć\n\n")
   
   if (colnames(dane_tab_K2dys_plec(ramka_danych, nazwa_jednostki,  
                                    typ_szk, ewaluowany_rok_abs, 

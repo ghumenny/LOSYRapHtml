@@ -12,9 +12,14 @@
 #' @export
 gentab_typsz_flext_og <- function(dane_do_tabeli, edycja) {
 
-  # Sprawdzenie, czy dane wejściowe nie są puste
-  if (is.null(dane_do_tabeli) || colnames(dane_do_tabeli)[1] %in% "Uwaga") {
-    message("Nie udostępnia się zagregowanych wyników monitoringu karier absolwentów obejmujących mniej niż 10 osób.")
+  if (is.null(dane_do_tabeli) || colnames(dane_do_tabeli)[1] == "Uwaga") {
+    komunikat <- if (is.null(dane_do_tabeli)) {
+      "Brak danych dla wybranych kryteriów."
+    } else {
+      dane_do_tabeli$Uwaga[1]
+    }
+    cat(paste0("\n\n", komunikat, "\n\n"))
+    return(invisible(NULL))
   }
 
   # Tworzenie flextable i stosowanie formatowania
@@ -90,10 +95,15 @@ gentab_typsz_flext_zaw <- function(dane_do_tabeli, edycja) {
 #' @export
 gentab_tab_flex <- function(dane_do_tabeli, edycja) {
 
-  # Sprawdzenie, czy dane wejściowe nie są puste
-  if (is.null(dane_do_tabeli) || colnames(dane_do_tabeli)[1] %in% "Uwaga") {
-    message("Nie udostępnia się zagregowanych wyników monitoringu karier absolwentów obejmujących mniej niż 10 osób.")
+  if (is.null(dane_do_tabeli) || colnames(dane_do_tabeli)[1] == "Uwaga") {
+    komunikat <- if (is.null(dane_do_tabeli)) {
+      "Brak danych dla wybranych kryteriów."
+    } else {
+      dane_do_tabeli$Uwaga[1]
     }
+    cat(paste0("\n\n", komunikat, "\n\n"))
+    return(invisible(NULL))
+  }
 
   # Tworzenie flextable i stosowanie formatowania
   tabela_flextable <- dane_do_tabeli %>%
@@ -125,6 +135,7 @@ gentab_K2dys_zaw <- function(dane_do_tabeli, edycja) {
 
   if (is.null(dane_do_tabeli) || nrow(dane_do_tabeli)[1] == 0) {
     message("Nie udostępnia się zagregowanych wyników monitoringu karier absolwentów obejmujących mniej niż 10 osób.")
+    cat("Nie udostępnia się zagregowanych wyników monitoringu karier absolwentów obejmujących mniej niż 10 osób.")
   }
 
   num_cols <- ncol(dane_do_tabeli)
@@ -165,6 +176,7 @@ gentab_tab_dt <- function(dane_do_tabeli, edycja) {
   # Sprawdzenie, czy dane wejściowe nie są puste
   if (is.null(dane_do_tabeli) || colnames(dane_do_tabeli)[1] %in% "Uwaga") {
     message("Nie udostępnia się zagregowanych wyników monitoringu karier absolwentów obejmujących mniej niż 10 osób.")
+    cat("Nie udostępnia się zagregowanych wyników monitoringu karier absolwentów obejmujących mniej niż 10 osób.")
   }
 
   # Tworzenie datatable i stosowanie formatowania

@@ -40,12 +40,22 @@ dane_wyk_D2_plec <- function(ramka_danych,
     ))
   }
 
+  wiersz_sumy <- dane_wejsciowe %>%
+    filter(D2 == "SUMA")
+  n_m <- if(nrow(wiersz_sumy) > 0) wiersz_sumy$n_Mężczyzna else 0
+  n_k <- if(nrow(wiersz_sumy) > 0) wiersz_sumy$n_Kobieta else 0
+  n_o <- if(nrow(wiersz_sumy) > 0) wiersz_sumy$n_OGÓŁEM else 0
 
   dane_wyjsciowe <- dane_wejsciowe  %>%
     filter(D2 != "SUMA", D2 != "Nie dotyczy") %>%
     select(D2, starts_with("pct_")) %>%
     pivot_longer(!D2, names_to = "plec", values_to = "pct",
                  names_prefix = "pct_") %>%
+    filter(
+      (plec == "Mężczyzna" & n_m >= 10) |
+        (plec == "Kobieta" & n_k >= 10) |
+        (plec == "OGÓŁEM" & n_o >= 10)
+    ) %>%
     mutate(
       pct = .data$pct / 100,
       dyplom = case_when(
@@ -106,9 +116,17 @@ dane_tab_D2_plec <- function(ramka_danych,
     ))
   }
 
+  wiersz_sumy <- dane_wejsciowe %>% filter(D2 == "SUMA")
+  n_m <- if(nrow(wiersz_sumy) > 0) wiersz_sumy$n_Mężczyzna else 0
+  n_k <- if(nrow(wiersz_sumy) > 0) wiersz_sumy$n_Kobieta else 0
+  n_o <- if(nrow(wiersz_sumy) > 0) wiersz_sumy$n_OGÓŁEM else 0
+
   dane_wyjsciowe <- dane_wejsciowe  %>%
     filter(D2 != "SUMA", D2 != "Nie dotyczy") %>%
     select(D2, n_OGÓŁEM, starts_with("pct_")) %>%
+    { if (n_m < 10) select(., -ends_with("Mężczyzna")) else . } %>%
+    { if (n_k < 10) select(., -ends_with("Kobieta")) else . } %>%
+    { if (n_o < 10) select(., -ends_with("OGÓŁEM")) else . }  %>%
     mutate(
       across(where(is.numeric), ~  round(.,digits = 2)),
       `Egzamin maturalny` = case_when(
@@ -167,7 +185,8 @@ dane_wyk_D2_zaw <- function(ramka_danych,
 
 
   dane_wyjsciowe <- dane_wejsciowe  %>%
-    filter(nazwa_zaw != "OGÓŁEM") %>%
+    filter(nazwa_zaw != "OGÓŁEM",
+           n_SUMA > 10) %>%
     slice(1:10) %>%
     select(nazwa_zaw, n_SUMA, starts_with("pct_"), -pct_SUMA) %>%
     pivot_longer(!c(nazwa_zaw, n_SUMA), names_to = "dyplom", values_to = "pct",

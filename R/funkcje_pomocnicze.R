@@ -8,7 +8,7 @@ dopelniacz <- function(nazwa) {
          "Liceum ogólnokształcące dla dorosłych" = "Liceów ogólnokształcących dla dorosłych",
          "Branżowa szkoła I stopnia" = "Branżowych szkół I stopnia",
          "Młodociani w Branżowej szkole I stopnia" = "Branżowych szkół I stopnia, którzy kształcili się będąc pracownikami młodocianymi",
-         "Niemłodociani w Branżowej szkole I stopnia" = "Branżowych szkół I stopnia, którzy kształcili się będąc pracownikami niemłodocianymi",
+         "Niemłodociani w Branżowej szkole I stopnia" = "Branżowych szkół I stopnia, którzy kształcili się nie będąc pracownikami młodocianymi",
          "Szkoła policealna" = "Szkół policealnych",
          "Szkoła specjalna przysposabiająca do pracy" = "Szkół specjalnych przysposabiających do pracy",
          "Technikum" = "Techników",
