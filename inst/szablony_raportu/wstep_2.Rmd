@@ -137,7 +137,7 @@ Monitorowanie karier absolwentów  polega na ustalaniu, jaką wartość mają ws
 
 **Absolwenci objęci monitoringiem**
 
-Informacje o absolwentach pozyskano z Systemu Informacji Oświatowej według stanu bazy na 15 marca 2024 roku. Absolwentami są uczniowie ostatnich klas, którym w SIO zakończono przypisanie do oddziału wybierając status „Ukończył szkołę”.
+Informacje o absolwentach pozyskano z Systemu Informacji Oświatowej według stanu bazy na 15 marca `r ewaluowana_edycja` roku. Absolwentami są uczniowie ostatnich klas, którym w SIO zakończono przypisanie do oddziału wybierając status „Ukończył szkołę”.
 
 **Absolwenci `r ewaluowany_rok_abs`**
 
