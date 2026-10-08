@@ -48,6 +48,13 @@ dane_wyk_K2dzi_plec <- function(ramka_danych,
     ))
   }
 
+  if (ncol(dane_wejsciowe) <= 3) {
+    message("Liczba kolumn jest mniejsza lub równa 3. Zwracam komunikację o braku wystarczającej liczby absolwentów.")
+    return(tibble(
+      Uwaga = "Brak wystarczającej liczby absolwentów na studiach aby móc wyświetlić zestawienie"
+    ))
+  }
+
   dane_wyjsciowe <- dane_wejsciowe  %>%
     select(sexf, starts_with("procent_")) %>%
     pivot_longer(!sexf, names_to = "dziedzina", values_to = "pct",
@@ -569,6 +576,13 @@ dane_wyk_K2dys_plec <- function(ramka_danych,
     message("Brak danych wejściowych dla podanych kryteriów. Zwracam pustą ramkę danych.")
     return(tibble(
       Uwaga = "Mniej niż 10 absolwentó ogółem lub w każdej płci jednocześnie."
+    ))
+  }
+
+  if (ncol(dane_wejsciowe) <= 3) {
+    message("Liczba kolumn jest mniejsza lub równa 3. Zwracam komunikację o braku wystarczającej liczby absolwentów.")
+    return(tibble(
+      Uwaga = "Brak wystarczającej liczby absolwentów na studiach aby móc wyświetlić zestawienie"
     ))
   }
 
