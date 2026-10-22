@@ -34,7 +34,8 @@ export(dane_wyk_K2dzi_plec)
 export(dane_wyk_S7_mscrok)
 export(dane_wyk_S7_plec)
 export(dane_wyk_S7_zaw)
-export(dane_wyk_meta_migracje)
+export(dane_wyk_meta_migracje_nauka)
+export(dane_wyk_meta_migracje_praca)
 export(dane_wyk_meta_typsz_og)
 export(dane_wyk_meta_typsz_plec)
 export(dane_wyk_meta_typsz_zaw)
@@ -53,60 +54,76 @@ export(oblicz_wysokosc_wykresu_zawody)
 export(pobierz_aktywne_branze)
 importFrom(DT,datatable)
 importFrom(bookdown,word_document2)
-importFrom(dplyr,"%>%")
-importFrom(dplyr,across)
-importFrom(dplyr,all_of)
-importFrom(dplyr,any_of)
-importFrom(dplyr,arrange)
-importFrom(dplyr,bind_cols)
-importFrom(dplyr,bind_rows)
-importFrom(dplyr,case_when)
-importFrom(dplyr,desc)
-importFrom(dplyr,distinct)
-importFrom(dplyr,ends_with)
-importFrom(dplyr,filter)
-importFrom(dplyr,if_all)
-importFrom(dplyr,if_else)
-importFrom(dplyr,left_join)
-importFrom(dplyr,matches)
-importFrom(dplyr,mutate)
-importFrom(dplyr,pull)
-importFrom(dplyr,relocate)
-importFrom(dplyr,rename)
-importFrom(dplyr,rename_with)
-importFrom(dplyr,select)
-importFrom(dplyr,slice)
-importFrom(dplyr,starts_with)
-importFrom(dplyr,summarise)
-importFrom(dplyr,where)
-importFrom(flextable,add_footer_lines)
-importFrom(flextable,align)
-importFrom(flextable,colformat_num)
-importFrom(flextable,flextable)
-importFrom(flextable,separate_header)
-importFrom(flextable,set_header_labels)
-importFrom(flextable,set_table_properties)
-importFrom(flextable,theme_booktabs)
-importFrom(knitr,knit)
-importFrom(knitr,knit_expand)
-importFrom(rlang,"!!")
-importFrom(rlang,.data)
-importFrom(rlang,enquo)
+importFrom(dplyr,
+  "%>%",
+  across,
+  all_of,
+  any_of,
+  arrange,
+  bind_cols,
+  bind_rows,
+  case_when,
+  desc,
+  distinct,
+  ends_with,
+  filter,
+  if_all,
+  if_else,
+  left_join,
+  matches,
+  mutate,
+  pull,
+  relocate,
+  rename,
+  rename_with,
+  select,
+  slice,
+  starts_with,
+  summarise,
+  where
+)
+importFrom(flextable,
+  add_footer_lines,
+  align,
+  colformat_num,
+  flextable,
+  separate_header,
+  set_header_labels,
+  set_table_properties,
+  theme_booktabs
+)
+importFrom(knitr,
+  knit,
+  knit_expand
+)
+importFrom(rlang,
+  "!!",
+  .data,
+  enquo
+)
 importFrom(rmarkdown,render)
 importFrom(stats,reorder)
-importFrom(stringr,str_c)
-importFrom(stringr,str_replace)
-importFrom(stringr,str_split_fixed)
-importFrom(stringr,str_sub)
-importFrom(stringr,str_to_sentence)
-importFrom(stringr,str_to_upper)
-importFrom(tibble,as_tibble)
-importFrom(tibble,tibble)
-importFrom(tidyr,pivot_longer)
-importFrom(tidyr,pivot_wider)
-importFrom(tidyr,separate)
-importFrom(tidyr,unnest)
-importFrom(tidyselect,all_of)
-importFrom(tidyselect,matches)
-importFrom(tidyselect,starts_with)
-importFrom(tidyselect,where)
+importFrom(stringr,
+  str_c,
+  str_replace,
+  str_split_fixed,
+  str_sub,
+  str_to_sentence,
+  str_to_upper
+)
+importFrom(tibble,
+  as_tibble,
+  tibble
+)
+importFrom(tidyr,
+  pivot_longer,
+  pivot_wider,
+  separate,
+  unnest
+)
+importFrom(tidyselect,
+  all_of,
+  matches,
+  starts_with,
+  where
+)

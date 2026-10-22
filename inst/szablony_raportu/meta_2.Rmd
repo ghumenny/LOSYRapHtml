@@ -107,27 +107,55 @@ cat0("## Migracje absolwentów z ", ewaluowany_rok_abs, " r. z ", dopelniacz(naz
 
 cat0("Kolejne dwa kartogramy przedstawiają migracje absolwentów z województwa odpowiednio w grudniu roku ukończenia nauki oraz po kolejnych 12 miesiącach. Informacje o przepływach zostały przygotowane w oparciu o lokalizację szkoły, którą ukończyli absolwenci oraz w oparciu o miejsce zamieszkania, deklarowane przez pracownika w dokumentach przekazywanych do ZUS przez pracodawcę. Na kartogramie podano, jaki procent ogółu absolwentów szkół z ", dopelniacz(nazwa_jednostki)," stanowią ci, którzy w danym miesiące wg danych ZUS zamieszkiwali w poszczególnych województwach. Dane przetwarzane w ramach monitoringu nie pozwalają na określenie miejsca kontynuowania nauki, ani miejsca zamieszkania osób nie kontynuujących nauki i nie podejmujących pracy. Na pasku pod kartogramem, z lewej strony, podano, dla jakiego procenta absolwentów z ", dopelniacz(nazwa_jednostki)," miejsce zamieszkania nie jest znane, gdyż nie było o nim informacji w danych ZUS (absolwent w danym miesiącu nie pracował w Polsce lub pracował w formie nieewidencjonowanej przez ZUS).\n\n")
   
-cat0("Kartogram 1: Migracje absolwentów z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " w grudniu ", ewaluowany_rok, " roku. \n")    
+cat0("Kartogram 1: Migracje absolwentów z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " w związku z podejmowaniem pracy w grudniu ", ewaluowany_rok, " roku. \n")    
 (wykresMigracjeWoj %+% 
-    zlacz_z_mapa(dane_wyk_meta_migracje(ramka_danych, nazwa_jednostki,
-                                        ewaluowany_rok_abs, 
+    zlacz_z_mapa(dane_wyk_meta_migracje_praca(ramka_danych, nazwa_jednostki, 
+                                              ewaluowany_rok_abs, 
                                         rok = ewaluowany_rok))) |> # podmiana danych
   zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
   zmien_rok_w_podpisie(ewaluowana_edycja) %>%  # zmiana roku w podpisie
-  print()
+    print()
 }
 ```
 
 ```{r '{{nazwa_jednostki}}.meta.w4', fig.width=10, fig.height=10}
 if (ewaluowana_edycja == (ewaluowany_rok_abs + 2) &&
     tylko_tabele == FALSE && typ_rap == "WOJ_NAZWA") {
-cat0("Kartogram 2: Migracje absolwentów z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " w grudniu ", ewaluowany_kolejny_rok, " roku. \n")    
+cat0("Kartogram 2: Migracje absolwentów z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " w związku z podejmowaniem pracy w grudniu ", ewaluowany_kolejny_rok, " roku. \n")    
   (wykresMigracjeWoj %+% 
-      zlacz_z_mapa(dane_wyk_meta_migracje(ramka_danych, nazwa_jednostki,
-                                          ewaluowany_rok_abs, 
-                                          rok = ewaluowany_kolejny_rok))) |> # podmiana danych
-    zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
-    zmien_rok_w_podpisie(ewaluowana_edycja) %>%  # zmiana roku w podpisie
+      zlacz_z_mapa(dane_wyk_meta_migracje_praca(ramka_danych, nazwa_jednostki, 
+                                                ewaluowany_rok_abs, 
+                                        rok = ewaluowany_kolejny_rok))) |> # podmiana danych
+  zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
+  zmien_rok_w_podpisie(ewaluowana_edycja) %>%  # zmiana roku w podpisie
+    print()
+}
+```
+
+```{r '{{nazwa_jednostki}}.meta.w5', fig.width=10, fig.height=10}
+if (tylko_tabele == FALSE) {
+
+cat0("Kartogram 3: Migracje absolwentów z ", ewaluowany_rok_abs, " r. z województwa ", dopelniacz_w(nazwa_jednostki), " w związku z podejmowaniem nauki w grudniu ", ewaluowany_rok, " roku. \n")    
+(wykresMigracjeWoj %+% 
+    zlacz_z_mapa(dane_wyk_meta_migracje_nauka(ramka_danych, nazwa_jednostki, 
+                                              ewaluowany_rok_abs, 
+                                        rok = ewaluowany_rok))) |> # podmiana danych
+  zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
+  zmien_rok_w_podpisie(ewaluowana_edycja) %>%  # zmiana roku w podpisie
+    print()
+}
+```
+
+```{r '{{nazwa_jednostki}}.meta.w6', fig.width=10, fig.height=10}
+if (ewaluowana_edycja == (ewaluowany_rok_abs + 2) &&
+    tylko_tabele == FALSE) {
+cat0("Kartogram 4: Migracje absolwentów z ", ewaluowany_rok_abs, " r. z województwa ", dopelniacz_w(nazwa_jednostki), " w związku z podejmowaniem nauki w grudniu ", ewaluowany_kolejny_rok, " roku. \n")    
+(wykresMigracjeWoj %+% 
+    zlacz_z_mapa(dane_wyk_meta_migracje_nauka(ramka_danych, nazwa_jednostki, 
+                                              ewaluowany_rok_abs, 
+                                        rok = ewaluowany_kolejny_rok))) |> # podmiana danych
+  zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
+  zmien_rok_w_podpisie(ewaluowana_edycja) %>%  # zmiana roku w podpisie
     print()
 }
 ```

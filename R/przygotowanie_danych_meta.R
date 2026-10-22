@@ -482,7 +482,7 @@ dane_wyk_meta_typsz_zaw <- function(ramka_danych,
 #' @importFrom rlang .data
 #' @importFrom tibble tibble
 #' @export
-dane_wyk_meta_migracje <- function(ramka_danych,
+dane_wyk_meta_migracje_praca <- function(ramka_danych,
                                    woj_nazwa, rok_absolwentow, rok) {
 
   eval_rok <- rok
@@ -490,6 +490,7 @@ dane_wyk_meta_migracje <- function(ramka_danych,
     filter(
       .data$WOJ_NAZWA == {{woj_nazwa}},
       .data$wskaznik == "migracje",
+      .data$kryterium == "teryt_pracy",
       .data$rok_abs == {{rok_absolwentow}},
       .data$rok == {{eval_rok}}
     ) %>%
@@ -511,3 +512,46 @@ dane_wyk_meta_migracje <- function(ramka_danych,
   return(dane_wyjsciowe)
 }
 
+#' @title Przygotowanie danych do wykresu z migracjami
+#' @description Funkcja filtruje dane z pełnej ramki wskaźników,
+#'   aby przygotować je do generowania kartogramu z migracjami.
+#'   Zwraca surową ramkę danych z zagnieżdżonego obiektu.
+#' @param ramka_danych Ramka danych zawierająca pełne wyniki wskaźników.
+#'   Oczekuje, że kolumna 'wynik' zawiera zagnieżdżone ramki danych.
+#' @param woj_nazwa Zmienna tekstowa nazwa województwa.
+#' @param rok_absolwentow Liczba całkowita reprezentująca rok absolwentów do filtrowania.
+#' @param rok Liczba całkowita reprezentująca rok do filtrowania.
+#' @return Ramka danych typu tibble w finalnym formacie do zasilania wykresów.
+#' @importFrom dplyr %>% filter pull arrange mutate select
+#' @importFrom rlang .data
+#' @importFrom tibble tibble
+#' @export
+dane_wyk_meta_migracje_nauka <- function(ramka_danych,
+                                   woj_nazwa, rok_absolwentow, rok) {
+
+  eval_rok <- rok
+  dane_wejsciowe <- ramka_danych %>%
+    filter(
+      .data$WOJ_NAZWA == {{woj_nazwa}},
+      .data$wskaznik == "migracje",
+      .data$kryterium == "teryt_nauki",
+      .data$rok_abs == {{rok_absolwentow}},
+      .data$rok == {{eval_rok}}
+    ) %>%
+    pull(.data$wynik) %>% `[[`(1)
+  # Sprawdzenie, czy dane wejściowe nie są puste
+  if (is.null(dane_wejsciowe)  ||
+      colnames(dane_wejsciowe)[1] %in% "Uwaga") {
+    message("Brak danych do wygenerowania tabeli. Zwracam pusty obiekt flextable.")
+    return(tibble(
+      Uwaga = "Brak danych wejściowych dla podanych kryteriów."
+    ))
+  }
+  dane_wyjsciowe <- dane_wejsciowe %>%
+    filter(wartość != "ŁĄCZNIE"| is.na(wartość)) %>%
+    mutate(pct = round(częstość / 100,digits = 4),
+           teryt_woj = as.integer(wartość)) %>%
+    arrange(teryt_woj) %>%
+    select(teryt_woj, pct)
+  return(dane_wyjsciowe)
+}

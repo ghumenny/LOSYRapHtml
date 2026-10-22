@@ -93,11 +93,11 @@ tabelka
 
 ```{r '{{woj_nazwa}}.meta.w3', fig.width=10, fig.height=10}
 if (tylko_tabele == FALSE) {
-cat0("## Migracje absolwentów z ", ewaluowany_rok_abs, " r. z województwa ", dopelniacz_w(nazwa_woj), " w grudniu ", ewaluowany_rok, " roku. \n")
+cat0("## Migracje absolwentów z ", ewaluowany_rok_abs, " r. z województwa ", dopelniacz_w("{{woj_nazwa}}"), " w związku z podejmowaniem pracy w grudniu ", ewaluowany_rok, " roku. \n")
 
-cat0("Wykres ", wyk_num(), ": Migracje absolwentów z ", ewaluowany_rok_abs, " r. z województwa ", dopelniacz_w(nazwa_woj), " w grudniu ", ewaluowany_rok, " roku. \n")    
+cat0("Wykres ", wyk_num(), ": Migracje absolwentów z ", ewaluowany_rok_abs, " r. z województwa ", dopelniacz_w({{woj_nazwa}}), " w grudniu ", ewaluowany_rok, " roku. \n")    
 (wykresMigracjeWoj %+% 
-    zlacz_z_mapa(dane_wyk_meta_migracje(pelna_finalna_ramka_wskaznikow,  
+    zlacz_z_mapa(dane_wyk_meta_migracje_praca(pelna_finalna_ramka_wskaznikow,  
                                         nazwa_woj, ewaluowany_rok_abs, 
                                         rok = ewaluowany_rok))) |> # podmiana danych
   zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
@@ -109,9 +109,38 @@ cat0("Wykres ", wyk_num(), ": Migracje absolwentów z ", ewaluowany_rok_abs, " r
 ```{r '{{woj_nazwa}}.meta.w4', fig.width=10, fig.height=10}
 if (ewaluowana_edycja == (ewaluowany_rok_abs + 2) &&
     tylko_tabele == FALSE) {
-cat0("Wykres ", wyk_num(), ": Migracje absolwentów z ", ewaluowany_rok_abs, " r. z województwa ", dopelniacz_w(nazwa_woj), " w grudniu ", ewaluowany_kolejny_rok, " roku. \n")    
+cat0("Wykres ", wyk_num(), ": Migracje absolwentów z ", ewaluowany_rok_abs, " r. z województwa ", dopelniacz_w("{{woj_nazwa}}"), " w związku z podejmowaniem pracy w grudniu ", ewaluowany_kolejny_rok, " roku. \n")    
 (wykresMigracjeWoj %+% 
-    zlacz_z_mapa(dane_wyk_meta_migracje(pelna_finalna_ramka_wskaznikow,  
+    zlacz_z_mapa(dane_wyk_meta_migracje_praca(pelna_finalna_ramka_wskaznikow,  
+                                        nazwa_woj, ewaluowany_rok_abs, 
+                                        rok = ewaluowany_kolejny_rok))) |> # podmiana danych
+  zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
+  zmien_rok_w_podpisie(ewaluowana_edycja) %>%  # zmiana roku w podpisie
+    print()
+}
+```
+
+
+```{r '{{woj_nazwa}}.meta.w5', fig.width=10, fig.height=10}
+if (tylko_tabele == FALSE) {
+
+cat0("Wykres ", wyk_num(), ": Migracje absolwentów z ", ewaluowany_rok_abs, " r. z województwa ", dopelniacz_w("{{woj_nazwa}}"), " w związku z podejmowaniem nauki w grudniu ", ewaluowany_rok, " roku. \n")    
+(wykresMigracjeWoj %+% 
+    zlacz_z_mapa(dane_wyk_meta_migracje_nauka(pelna_finalna_ramka_wskaznikow,  
+                                        nazwa_woj, ewaluowany_rok_abs, 
+                                        rok = ewaluowany_rok))) |> # podmiana danych
+  zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki
+  zmien_rok_w_podpisie(ewaluowana_edycja) %>%  # zmiana roku w podpisie
+    print()
+}
+```
+
+```{r '{{woj_nazwa}}.meta.w6', fig.width=10, fig.height=10}
+if (ewaluowana_edycja == (ewaluowany_rok_abs + 2) &&
+    tylko_tabele == FALSE) {
+cat0("Wykres ", wyk_num(), ": Migracje absolwentów z ", ewaluowany_rok_abs, " r. z województwa ", dopelniacz_w("{{woj_nazwa}}"), " w związku z podejmowaniem nauki w grudniu ", ewaluowany_kolejny_rok, " roku. \n")    
+(wykresMigracjeWoj %+% 
+    zlacz_z_mapa(dane_wyk_meta_migracje_nauka(pelna_finalna_ramka_wskaznikow,  
                                         nazwa_woj, ewaluowany_rok_abs, 
                                         rok = ewaluowany_kolejny_rok))) |> # podmiana danych
   zmien_wielkosc_czcionek(baseSize = 16) |> # zmiana wielkości czcionki

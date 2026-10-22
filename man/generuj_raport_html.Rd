@@ -24,7 +24,7 @@ w podpisach tabel i wykresów.}
 \item{rok_abs}{Rok absolwentów.}
 
 \item{wersja}{wartosć liczbowa okreslajaca kolejną generowaną w danym roku
-wersję pliku .docx.}
+wersję pliku .html.}
 
 \item{tylko_tabele}{Wartość logiczna (TRUE/FALSE). Jeśli TRUE, generuje raport
 zawierający tylko tabele. W przeciwnym wypadku dołącza też wykresy.}
