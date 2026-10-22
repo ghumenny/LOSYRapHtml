@@ -133,9 +133,9 @@ cat0("Kartogram 2: Migracje absolwentów z ", ewaluowany_rok_abs, " r. z ", dope
 ```
 
 ```{r '{{nazwa_jednostki}}.meta.w5', fig.width=10, fig.height=10}
-if (tylko_tabele == FALSE) {
+if (tylko_tabele == FALSE && typ_rap == "WOJ_NAZWA") {
 
-cat0("Kartogram 3: Migracje absolwentów z ", ewaluowany_rok_abs, " r. z województwa ", dopelniacz_w(nazwa_jednostki), " w związku z podejmowaniem nauki w grudniu ", ewaluowany_rok, " roku. \n")    
+cat0("Kartogram 3: Migracje absolwentów z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " w związku z podejmowaniem nauki w grudniu ", ewaluowany_rok, " roku. \n")    
 (wykresMigracjeWoj %+% 
     zlacz_z_mapa(dane_wyk_meta_migracje_nauka(ramka_danych, nazwa_jednostki, 
                                               ewaluowany_rok_abs, 
@@ -148,8 +148,8 @@ cat0("Kartogram 3: Migracje absolwentów z ", ewaluowany_rok_abs, " r. z wojewó
 
 ```{r '{{nazwa_jednostki}}.meta.w6', fig.width=10, fig.height=10}
 if (ewaluowana_edycja == (ewaluowany_rok_abs + 2) &&
-    tylko_tabele == FALSE) {
-cat0("Kartogram 4: Migracje absolwentów z ", ewaluowany_rok_abs, " r. z województwa ", dopelniacz_w(nazwa_jednostki), " w związku z podejmowaniem nauki w grudniu ", ewaluowany_kolejny_rok, " roku. \n")    
+    tylko_tabele == FALSE && typ_rap == "WOJ_NAZWA") {
+cat0("Kartogram 4: Migracje absolwentów z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " w związku z podejmowaniem nauki w grudniu ", ewaluowany_kolejny_rok, " roku. \n")    
 (wykresMigracjeWoj %+% 
     zlacz_z_mapa(dane_wyk_meta_migracje_nauka(ramka_danych, nazwa_jednostki, 
                                               ewaluowany_rok_abs, 
