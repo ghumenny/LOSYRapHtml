@@ -46,13 +46,13 @@ dane_tab_W1 <- function(ramka_danych,
   dane_wyjsciowe <- dane_wejsciowe  %>%
     mutate(
       across(where(is.numeric), ~  round(.,digits = 2))) %>%
-    rename(`Liczba absolwentów uzyskujących przychód`	= n,
-           `Średnie przychody` = sre,
-           `Przychody w 5 centylu` = q5,
-           `Przychody w 25 centylu`	= q25,
-           `Przychody połowy pracujących (mediana)` = med,
-           `Przychody w 75 centylu`	= q75,
-           `Przychody w 95 centylu` = q95)
+    rename(`Liczba absolwentów z wynagrodzeniem`	= n,
+           `Średnie wynagrodzenia` = sre,
+           `Wynagrodzenia w 5 centylu` = q5,
+           `Wynagrodzenia w 25 centylu`	= q25,
+           `Wynagrodzenia połowy pracujących (mediana)` = med,
+           `Wynagrodzenia w 75 centylu`	= q75,
+           `Wynagrodzenia w 95 centylu` = q95)
 
   if ({{kryterium}} == "sexf") {
     dane_wyjsciowe <- dane_wyjsciowe  %>%

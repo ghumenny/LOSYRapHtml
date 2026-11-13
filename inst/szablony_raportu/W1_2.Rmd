@@ -38,14 +38,17 @@ set_flextable_defaults(
 
 ```{r '{{typ_szk}},W1t1'}
 if (typ_szk %in% szkoly_branzowe) {
-cat0("### Przychody - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. {-}\n\n")
+cat0("### Wynagrodzenia - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. {-}\n\n")
 }
 if (typ_szk %ni% szkoly_branzowe) {
-cat0("## Przychody - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. {-}\n\n")
+cat0("## Wynagrodzenia - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. {-}\n\n")
 }
 
+cat0(if(ewaluowana_edycja == 2026) {"Od bieżącej edycji monitoringu (2026)"} else {"Począwszy od edycji monitoringu realizowanej w 2026 roku"}, " wynagrodzenia absolwentów obliczane są w inny sposób. Tak jak w poprzednich edycjach, wskaźniki są obliczane na podstawie danych z ZUS i opierają się na danych dotyczących podstawy wymiaru składek na ubezpieczenia społeczne oraz ubezpieczenie zdrowotne. Jednak obecnie uwzględniają one wynagrodzenia jedynie ze wszystkich umów o pracę, a nie jak dotąd ze wszystkich źródeł, od których odprowadzono składki do ZUS, a także wymiar etatu i liczbę przepracowanych dni w miesiącu. Stawka wynagrodzeń obliczona w ten sposób różni się wysokością od poprzedniego wskaźnika wynagrodzeń. Dlatego, porównując tegoroczne wyniki z wynikami prezentowanymi w raportach z poprzednich edycji należy zachować ostrożność.\n\n")
+  
+
 if (typ_szk %ni% "Szkoła specjalna przysposabiająca do pracy") {
-cat0("Tabela ", tab_num(), ": Średnie miesięczne przychody w czwartym kwartale ", ewaluowany_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " - w podziale na płeć\n\n")
+cat0("Tabela ", tab_num(), ": Średnia miesięczna stawka wynagrodzenia z pracy w czwartym kwartale ", ewaluowany_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " - w podziale na płeć\n\n")
   
 dane_tab_W1(ramka_danych, nazwa_jednostki,
             typ_szk, "sexf", ewaluowany_rok_abs, 
@@ -57,7 +60,7 @@ dane_tab_W1(ramka_danych, nazwa_jednostki,
 
 ```{r '{{typ_szk}},W1t2'}
 if (typ_szk %in% szkoly_z_zawodem) {
-cat0("Tabela ", tab_num(), ": Średnie miesięczne przychody w czwartym kwartale ", ewaluowany_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " - w podziale na zawody o największej liczbie absolwentów\n\n")
+cat0("Tabela ", tab_num(), ": Średnia miesięczna stawka wynagrodzenia z pracy w czwartym kwartale ", ewaluowany_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " - w podziale na zawody o największej liczbie absolwentów\n\n")
   
 dane_tab_W1(ramka_danych, nazwa_jednostki,
             typ_szk, "nazwa_zaw", ewaluowany_rok_abs, 
@@ -69,7 +72,7 @@ dane_tab_W1(ramka_danych, nazwa_jednostki,
 ```{r '{{typ_szk}},W1t3'}
 if (ewaluowana_edycja == (ewaluowany_rok_abs + 2) &&
     typ_szk %ni% "Szkoła specjalna przysposabiająca do pracy") {
-   cat0("Tabela ", tab_num(), ": Średnie miesięczne przychody w całym ", ewaluowany_kolejny_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " - ogółem i w podziale na płeć\n\n")
+   cat0("Tabela ", tab_num(), ": Średnia miesięczna stawka wynagrodzenia z pracy w całym ", ewaluowany_kolejny_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " - ogółem i w podziale na płeć\n\n")
   
 dane_tab_W1(ramka_danych, nazwa_jednostki,
             typ_szk, "sexf", ewaluowany_rok_abs, 
@@ -81,7 +84,7 @@ dane_tab_W1(ramka_danych, nazwa_jednostki,
 ```{r '{{typ_szk}},W1t4'}
 if (ewaluowana_edycja == (ewaluowany_rok_abs + 2) &&
     typ_szk %in% szkoly_z_zawodem) {
-cat0("Tabela ", tab_num(), ": Średnie miesięczne przychody w całym ", ewaluowany_kolejny_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " - w podziale na zawody o największej liczbie absolwentów\n\n")
+cat0("Tabela ", tab_num(), ": Średnia miesięczna stawka wynagrodzenia z pracy w całym ", ewaluowany_kolejny_rok," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " - w podziale na zawody o największej liczbie absolwentów\n\n")
   
 dane_tab_W1(ramka_danych, nazwa_jednostki,
             typ_szk, "nazwa_zaw", ewaluowany_rok_abs, 
@@ -92,7 +95,7 @@ dane_tab_W1(ramka_danych, nazwa_jednostki,
 
 ```{r '{{typ_szk}},W1t5'}
 
-   cat0("Tabela ", tab_num(), ": Średnie miesięczne przychody w pierwszym kwartale ", ewaluowana_edycja," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " - ogółem i w podziale na płeć\n\n")
+   cat0("Tabela ", tab_num(), ": Średnia miesięczna stawka wynagrodzenia z pracy w pierwszym kwartale ", ewaluowana_edycja," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " - ogółem i w podziale na płeć\n\n")
 if (typ_szk %ni% "Szkoła specjalna przysposabiająca do pracy") {  
 dane_tab_W1(ramka_danych, nazwa_jednostki,
             typ_szk, "sexf", ewaluowany_rok_abs, 
@@ -103,7 +106,7 @@ dane_tab_W1(ramka_danych, nazwa_jednostki,
 
 ```{r '{{typ_szk}},W1t6'}
 if (typ_szk %in% szkoly_z_zawodem) {
-cat0("Tabela ", tab_num(), ": Średnie miesięczne przychody w pierwszym kwartale ", ewaluowana_edycja," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " - w podziale na zawody o największej liczbie absolwentów\n\n")
+cat0("Tabela ", tab_num(), ": Średnia miesięczna stawka wynagrodzenia z pracy w pierwszym kwartale ", ewaluowana_edycja," r. - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r. z ", dopelniacz(nazwa_jednostki), " - w podziale na zawody o największej liczbie absolwentów\n\n")
   
 dane_tab_W1(ramka_danych, nazwa_jednostki,
             typ_szk, "nazwa_zaw", ewaluowany_rok_abs, 
