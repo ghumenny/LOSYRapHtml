@@ -288,7 +288,7 @@ dane_tab_meta_typsz_plec <- function(ramka_danych,
         "Niemłodociani w Branżowej szkole I stopnia",
         "Szkoła specjalna przysposabiająca do pracy"
       )),
-      liczba_Meżczyzna = round(.data$n_Mężczyzna),
+      liczba_Mężczyzna = round(.data$n_Mężczyzna),
       liczba_Kobieta = round(.data$n_Kobieta),
       procent_Mężczyzna = round(.data$pct_Mężczyzna, 2),
       procent_Kobieta = round(.data$pct_Kobieta, 2)

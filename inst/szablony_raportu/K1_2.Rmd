@@ -44,8 +44,7 @@ if (typ_szk %in% szkoly_z_zawodem)  {
 
 
 ```{r '{{typ_szk}},k1w1', fig.height = 4, fig.width=10}
-if (typ_szk %in% szkoly_branzowe &&
-    tylko_tabele == FALSE) {
+if (typ_szk %in% szkoly_branzowe) {
   cat0("### Kontynuowanie nauki - absolwenci ", dopelniacz(typ_szk)," z ", ewaluowany_rok_abs, " r.  {-} \n\n")
 }
 if (typ_szk %ni% szkoly_branzowe) {
